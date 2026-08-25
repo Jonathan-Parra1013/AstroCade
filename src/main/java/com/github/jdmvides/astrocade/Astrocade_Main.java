@@ -70,7 +70,7 @@ public class Astrocade_Main {
                 opcion = scanner.nextInt();
                 scanner.nextLine();
             } else {
-                System.out.println(" Opción inválida. Debe ingresar un número.");
+                System.out.println(" Opcion invalida. Debe ingresar un número.");
                 scanner.nextLine();
                 continue;
             }
@@ -117,7 +117,7 @@ public class Astrocade_Main {
                     else if (seleccion == 3) destino = u3;
 
                     if (destino == null) {
-                        System.out.println(" Selección de usuario no válida.");
+                        System.out.println(" Seleccion de usuario no valida.");
                     } else if (destino == portadorActivo) {
                         System.out.println(destino.getNombre() + " ya tiene la tarjeta en su poder.");
                     } else {

@@ -44,7 +44,7 @@ public class Usuario {
         }
 
         if (this.tarjeta != null) {
-            System.out.println(this.nombre + " le prestó la tarjeta #" + this.tarjeta.getNumeroTarjeta() + 
+            System.out.println(this.nombre + " le presto la tarjeta #" + this.tarjeta.getNumeroTarjeta() + 
                                " a " + amigo.getNombre() + ".");
             
             // Se le asigna el objeto Tarjeta al amigo
@@ -64,7 +64,7 @@ public class Usuario {
         System.out.println("\n--- PERFIL DE USUARIO ---");
         System.out.println("Cliente: " + this.nombre + " (C.C: " + this.cedula + ")");
         if (this.tarjeta != null) {
-            System.out.println("Estado de Tarjeta en Posesión: " + this.tarjeta.toString());
+            System.out.println("Estado de Tarjeta en Posesion: " + this.tarjeta.toString());
         } else {
             System.out.println("Estado de Tarjeta:  No tiene tarjeta asignada actualmente.");
         }

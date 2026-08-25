@@ -5,10 +5,10 @@
 package com.github.jdmvides.astrocade;
 
 /**
- * Representa la tarjeta física/digital dentro del parque AstroCade.
+ * Representa la tarjeta física/digital dentro de AstroCade.
  * Maneja de forma independiente el saldo en dinero y los tickets ganados.
  */
-import java.util.UUID; // Importamos el generador de identificadores únicos
+import java.util.UUID; // se impporta el generador de identificadores únicos
 
 public class Tarjeta {
 
@@ -16,7 +16,6 @@ public class Tarjeta {
     private double saldo;
     private int tickets;
 
-    // EL CONSTRUCTOR YA NO PIDE EL NÚMERO DE TARJETA
     // El propio sistema lo crea de forma privada y segura
     public Tarjeta(double saldoInicial) {
         // Genera un ID único con prefijo del parque (ej: ASTRO-8F3A)
@@ -26,14 +25,14 @@ public class Tarjeta {
         if (saldoInicial >= 0) {
             this.saldo = saldoInicial;
         } else {
-            System.out.println(" ALERTA: Saldo inicial inválido. Se asignó $0.0 por defecto.");
+            System.out.println(" ALERTA: Saldo inicial inválido. Se asigno $0.0 por defecto.");
             this.saldo = 0.0;
         }
 
         this.tickets = 0;
     }
 
-    // Eliminamos el setter de numeroTarjeta para que NINGÚN usuario 
+    // NINGÚN usuario 
     // pueda alterar el número de la tarjeta una vez creada (Seguridad)
     public String getNumeroTarjeta() {
         return this.numeroTarjeta;
@@ -73,7 +72,7 @@ public class Tarjeta {
     public void agregarTickets(int cantidad) {
         if (cantidad > 0) {
             this.tickets += cantidad;
-            System.out.println(" Se acreditó(aron) " + cantidad + " ticket(s) a la tarjeta [" + this.numeroTarjeta + "].");
+            System.out.println(" Se acredito(aron) " + cantidad + " ticket(s) a la tarjeta [" + this.numeroTarjeta + "].");
         }
     }
 
