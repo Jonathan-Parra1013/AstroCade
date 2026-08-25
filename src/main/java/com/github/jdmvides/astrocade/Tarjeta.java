@@ -26,7 +26,7 @@ public class Tarjeta {
         if (saldoInicial >= 0) {
             this.saldo = saldoInicial;
         } else {
-            System.out.println("⚠️ ALERTA: Saldo inicial inválido. Se asignó $0.0 por defecto.");
+            System.out.println(" ALERTA: Saldo inicial inválido. Se asignó $0.0 por defecto.");
             this.saldo = 0.0;
         }
 
@@ -50,10 +50,10 @@ public class Tarjeta {
     public void recargar(double monto) {
         if (monto > 0) {
             this.saldo += monto;
-            System.out.println("✅ Recarga exitosa de $" + monto + " a la tarjeta [" + this.numeroTarjeta + 
+            System.out.println(" Recarga exitosa de $" + monto + " a la tarjeta [" + this.numeroTarjeta + 
                                "]. Nuevo saldo: $" + this.saldo);
         } else {
-            System.out.println("❌ ERROR: El monto a recargar debe ser mayor a cero.");
+            System.out.println(" ERROR: El monto a recargar debe ser mayor a cero.");
         }
     }
 
@@ -64,7 +64,7 @@ public class Tarjeta {
             this.saldo -= monto;
             return true;
         } else {
-            System.out.println("⛔ SALDO INSUFICIENTE en la tarjeta [" + this.numeroTarjeta + 
+            System.out.println(" SALDO INSUFICIENTE en la tarjeta [" + this.numeroTarjeta + 
                                "] (Saldo: $" + this.saldo + ", Requerido: $" + monto + ")");
             return false;
         }
@@ -73,7 +73,7 @@ public class Tarjeta {
     public void agregarTickets(int cantidad) {
         if (cantidad > 0) {
             this.tickets += cantidad;
-            System.out.println("🎟️ Se acreditó(aron) " + cantidad + " ticket(s) a la tarjeta [" + this.numeroTarjeta + "].");
+            System.out.println(" Se acreditó(aron) " + cantidad + " ticket(s) a la tarjeta [" + this.numeroTarjeta + "].");
         }
     }
 
@@ -84,7 +84,7 @@ public class Tarjeta {
             this.tickets -= cantidad;
             return true;
         } else {
-            System.out.println("⛔ TICKETS INSUFICIENTES en tarjeta [" + this.numeroTarjeta + "]");
+            System.out.println(" TICKETS INSUFICIENTES en tarjeta [" + this.numeroTarjeta + "]");
             return false;
         }
     }

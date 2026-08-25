@@ -39,12 +39,12 @@ public class Usuario {
      */
     public void prestarTarjetaA(Usuario amigo) {
         if (amigo == null) {
-            System.out.println("❌ ERROR: El usuario destino no existe.");
+            System.out.println(" ERROR: El usuario destino no existe.");
             return;
         }
 
         if (this.tarjeta != null) {
-            System.out.println("🤝 " + this.nombre + " le prestó la tarjeta #" + this.tarjeta.getNumeroTarjeta() + 
+            System.out.println(this.nombre + " le prestó la tarjeta #" + this.tarjeta.getNumeroTarjeta() + 
                                " a " + amigo.getNombre() + ".");
             
             // Se le asigna el objeto Tarjeta al amigo
@@ -53,7 +53,7 @@ public class Usuario {
             // El usuario actual libera la tarjeta
             this.tarjeta = null;
         } else {
-            System.out.println("⚠️ " + this.nombre + " no tiene ninguna tarjeta para prestar.");
+            System.out.println(this.nombre + " no tiene ninguna tarjeta para prestar.");
         }
     }
 
@@ -66,7 +66,7 @@ public class Usuario {
         if (this.tarjeta != null) {
             System.out.println("Estado de Tarjeta en Posesión: " + this.tarjeta.toString());
         } else {
-            System.out.println("Estado de Tarjeta: 🚫 No tiene tarjeta asignada actualmente.");
+            System.out.println("Estado de Tarjeta:  No tiene tarjeta asignada actualmente.");
         }
     }
 
