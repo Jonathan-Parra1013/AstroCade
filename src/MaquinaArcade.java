@@ -17,7 +17,7 @@ public class MaquinaArcade {
             
             int puntuacion = (int) (Math.random() * 10000);
             System.out.println("PARTIDA TERMINADA");
-            System.out.println("Puntuación obtenida: " + puntuacion);
+            System.out.println("Puntuacion obtenida: " + puntuacion);
             
             int ticketsGanados;
 
@@ -43,7 +43,7 @@ public class MaquinaArcade {
     }
 
     public void mostrarInformacionMaquina() {
-        System.out.println("Máquina: " + nombre);
+        System.out.println("Maquina: " + nombre);
         System.out.println("Precio por partida: $" + precioPartida);
     }
 }
