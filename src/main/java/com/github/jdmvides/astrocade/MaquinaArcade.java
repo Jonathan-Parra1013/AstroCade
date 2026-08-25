@@ -12,10 +12,11 @@ public class MaquinaArcade {
         this.tickets = 0;
     }
 
-    public void jugar() {
-        if (saldo >= precioPartida) {
-            saldo -= precioPartida;
+    public void jugar(Tarjeta tarjeta) {
+        if (tarjeta.descontarSaldo(precioPartida)) {
             System.out.println("Partida iniciada en " + nombre);
+            System.out.println("Tarjeta: " + tarjeta.getNumeroTarjeta());
+            System.out.println("Se descontaron $" + precioPartida);
             
             int puntuacion = (int) (Math.random() * 10000);
             System.out.println("PARTIDA TERMINADA");
@@ -35,12 +36,14 @@ public class MaquinaArcade {
                 ticketsGanados = 50;
             }
 
-            tickets += ticketsGanados;
+            tarjeta.agregarTickets(ticketsGanados);
 
             System.out.println("Tickets ganados: " + ticketsGanados);
-            System.out.println("Tickets acumulados: " + tickets);
+            System.out.println("Tickets disponibles: " + tarjeta.getTickets());
+            System.out.println("Saldo restante: $" + tarjeta.getSaldo());
         } else {
-            System.out.println("No hay suficiente crédito.");
+            System.out.println("No se puede iniciar la partida.");
+            System.out.println("Saldo insuficiente en la tarjeta.");
         }
     }
 
