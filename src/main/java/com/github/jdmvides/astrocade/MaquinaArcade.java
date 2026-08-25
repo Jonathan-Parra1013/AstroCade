@@ -1,3 +1,5 @@
+package com.github.jdmvides.astrocade;
+
 public class MaquinaArcade {
 
     private String nombre;
