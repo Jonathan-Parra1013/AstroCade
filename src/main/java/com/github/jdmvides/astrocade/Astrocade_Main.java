@@ -46,6 +46,13 @@ public class Astrocade_Main {
         Usuario u1 = new Usuario(nombre1, cedula1, tarjetaCompartida); // Nace con la tarjeta
         Usuario u2 = new Usuario(nombre2, cedula2);                   // Nace sin tarjeta (null)
         Usuario u3 = new Usuario(nombre3, cedula3);                   // Nace sin tarjeta (null)
+        
+        MaquinaArcade maquina1 = new MaquinaArcade("Street Fighter",3500.0);
+        MaquinaArcade maquina2 = new MaquinaArcade("Mario Kart",4000.0);
+        
+        Premios peluche = new Premios("Peluche", 100);
+        Premios audifonos = new Premios("Audifonos", 300);
+        Premios consola = new Premios("Consola", 1000);
 
         // Control del portador que tiene la tarjeta en la mano en ese instante
         Usuario portadorActivo = u1;
@@ -63,8 +70,9 @@ public class Astrocade_Main {
             System.out.println("2. Recargar saldo a la tarjeta");
             System.out.println("3. Prestar / Transferir tarjeta");
             System.out.println("4. Simular partida en maquina (Gastar saldo y ganar tickets)");
-            System.out.println("5. Salir");
-            System.out.print("Selecciona una opcion (1-5): ");
+            System.out.println("5. Canjear premio");
+            System.out.println("6. Salir");
+            System.out.print("Selecciona una opcion (1-6): ");
 
             if (scanner.hasNextInt()) {
                 opcion = scanner.nextInt();
@@ -129,38 +137,78 @@ public class Astrocade_Main {
 
                 case 4:
                     // Partida en máquina
-                    System.out.println("\n--- SIMULACION DE JUEGO EN MÁQUINA ---");
-                    if (portadorActivo.getTarjeta() != null) {
-                        System.out.println("Jugando actualmente: " + portadorActivo.getNombre());
-                        double costoJuego = 3500.0;
-                        System.out.println("Costo de la partida: $" + costoJuego);
+                    System.out.println("SELECCIONAR MAQUINA");
 
-                        // Intenta cobrar el saldo con la validación interna
-                        boolean cobroExitoso = portadorActivo.getTarjeta().descontarSaldo(costoJuego);
+                    System.out.println("1. " + maquina1.getNombre()
+                    + " - $" + maquina1.getPrecioPartida());
 
-                        if (cobroExitoso) {
-                            System.out.print("Ingresa el puntaje (Score) obtenido: ");
-                            int score = scanner.nextInt();
-                            scanner.nextLine();
+                    System.out.println("2. " + maquina2.getNombre()
+                    + " - $" + maquina2.getPrecioPartida());
 
-                            int ticketsGanados = score / 10;
-                            portadorActivo.getTarjeta().agregarTickets(ticketsGanados);
-                            System.out.println(" ¡Partida finalizada! Acreditados " + ticketsGanados + " tickets.");
-                        }
+                    System.out.print("Selecciona una maquina: ");
+
+                    int maquinaSeleccionada = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (portadorActivo.getTarjeta() == null) {
+                        System.out.println(portadorActivo.getNombre() +" no tiene tarjeta para jugar.");
+                    } else if (maquinaSeleccionada == 1) {
+                        maquina1.jugar(portadorActivo.getTarjeta());
+                    } else if (maquinaSeleccionada == 2) {
+                        maquina2.jugar(portadorActivo.getTarjeta());
                     } else {
-                        System.out.println(portadorActivo.getNombre() + " no tiene tarjeta para jugar.");
+                        System.out.println("Máquina no válida.");
                     }
                     break;
-
+                
                 case 5:
-                    System.out.println("\n¡Gracias por usar el sistema AstroCade!");
+
+                System.out.println("\n====================================");
+                System.out.println("          CANJEAR PREMIO");
+                System.out.println("====================================");
+
+                if (portadorActivo.getTarjeta() == null) {
+
+                    System.out.println(portadorActivo.getNombre() +" no tiene una tarjeta.");
+                    break;
+                }
+                System.out.println("Portador actual: " +portadorActivo.getNombre());
+                System.out.println("Tickets disponibles: " +portadorActivo.getTarjeta().getTickets());
+                System.out.println("--- PREMIOS DISPONIBLES ---");
+                System.out.println("1. " + peluche.getNombre()+ " - " + peluche.getCostoTickets() + " tickets");
+                System.out.println("2. " + audifonos.getNombre()+ " - " + audifonos.getCostoTickets() + " tickets");
+                System.out.println("3. " + consola.getNombre()+ " - " + consola.getCostoTickets() + " tickets");
+                System.out.println("4. Cancelar");
+                System.out.print("Selecciona un premio: ");
+                int premioSeleccionado = scanner.nextInt();
+                scanner.nextLine();
+                switch (premioSeleccionado) {
+                    case 1:
+                        peluche.reclamarPremio(portadorActivo.getTarjeta());
+                        break;
+                    case 2:
+                        audifonos.reclamarPremio(portadorActivo.getTarjeta());
+                        break;
+                    case 3:
+                        consola.reclamarPremio(portadorActivo.getTarjeta());
+                        break;
+                    case 4:
+                        System.out.println("Canje cancelado.");
+                        break;
+                    default:
+                        System.out.println("Premio no válido.");
+                }
+                break;
+
+                case 6:
+                    System.out.println("¡Gracias por usar el sistema AstroCade!");
                     break;
 
                 default:
                     System.out.println(" Opción fuera de rango.");
             }
 
-        } while (opcion != 5);
+        } while (opcion != 6);
 
         scanner.close();
     }
