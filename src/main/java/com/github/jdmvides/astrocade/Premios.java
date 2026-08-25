@@ -23,23 +23,35 @@ public class Premios {
         System.out.println("Costo: " + costoTickets + " tickets");
     }
     
-    public void reclamarPremio(MaquinaArcade maquina) {
+     public void reclamarPremio(Tarjeta tarjeta) {
 
-   if (maquina.getTickets() >= costoTickets) {
+        if (tarjeta.getTickets() >= costoTickets) {
 
-            maquina.retirarTickets(costoTickets);
+            // Descontar los tickets de la tarjeta
+            tarjeta.descontarTickets(costoTickets);
 
             System.out.println("PREMIO RECLAMADO");
             System.out.println("Premio: " + nombre);
             System.out.println("Costo: " + costoTickets + " tickets");
-            System.out.println("Tickets restantes: " + maquina.getTickets());
+            System.out.println("Tarjeta: " + tarjeta.getNumeroTarjeta());
+            System.out.println("Tickets restantes: " + tarjeta.getTickets());
 
         } else {
 
-            System.out.println("No puedes reclamar este premio.");
+            System.out.println("\n===== NO SE PUEDE RECLAMAR =====");
             System.out.println("Premio: " + nombre);
-            System.out.println("Necesitas: " + costoTickets + " tickets");
-            System.out.println("Tienes: " + maquina.getTickets() + " tickets");
+            System.out.println("Costo: " + costoTickets + " tickets");
+            System.out.println("Tickets disponibles: " + tarjeta.getTickets());
+            System.out.println(
+                "Te faltan " +
+                (costoTickets - tarjeta.getTickets()) +
+                " tickets."
+            );
         }
+    }
+    @Override
+    public String toString() {
+        return "Premio: " + nombre +
+               " | Costo: " + costoTickets + " tickets";
     }
 }
