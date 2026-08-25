@@ -46,7 +46,13 @@ public class MaquinaArcade {
             System.out.println("Saldo insuficiente en la tarjeta.");
         }
     }
+    public String getNombre() {
+        return nombre;
+    }
 
+    public double getPrecioPartida() {
+        return precioPartida;
+    }
     
     public void mostrarInformacionMaquina() {
         System.out.println("Maquina: " + nombre);
