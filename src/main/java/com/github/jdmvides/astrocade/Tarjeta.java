@@ -71,16 +71,17 @@ public class Tarjeta {
 
     public void agregarTickets(int cantidad) {
         if (cantidad > 0) {
-            this.tickets += cantidad;
+            tickets += cantidad;
             System.out.println(" Se acredito(aron) " + cantidad + " ticket(s) a la tarjeta [" + this.numeroTarjeta + "].");
+            System.out.println("Tickets acumulados: " + tickets);
         }
     }
 
     public boolean descontarTickets(int cantidad) {
         if (cantidad <= 0) return false;
 
-        if (this.tickets >= cantidad) {
-            this.tickets -= cantidad;
+        if (tickets >= cantidad) {
+            tickets -= cantidad;
             return true;
         } else {
             System.out.println(" TICKETS INSUFICIENTES en tarjeta [" + this.numeroTarjeta + "]");
