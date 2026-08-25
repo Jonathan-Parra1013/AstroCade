@@ -10,7 +10,7 @@ El dominio modela el ciclo operativo de un arcade digital actual (reemplazando l
 
 ## Clases Elegidas 
 
-El sistema está diseñado utilizando los principios de la **Programación Orientada a Objetos (POO)** con un encapsulamiento estricto (`private` en atributos) y validaciones lógicas en constructores y métodos. Las clases principales son:
+El sistema está diseñado utilizando los principios de la **Programación Orientada a Objetos (POO)** con un encapsulamiento estricto (private en atributos) y validaciones lógicas en constructores y métodos. Las clases principales son:
 
 # 1.Usuario
 * **Responsabilidad:** Administra la identidad del cliente y gestiona la portabilidad temporal de una tarjeta de juego.
