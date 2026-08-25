@@ -1,3 +1,5 @@
+package com.github.jdmvides.astrocade;
+
 public class Premios {
 
     private String nombre;
