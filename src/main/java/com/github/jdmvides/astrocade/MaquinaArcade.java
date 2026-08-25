@@ -47,15 +47,6 @@ public class MaquinaArcade {
         }
     }
 
-     public int getTickets() {
-        return tickets;
-    }
-
-    public void retirarTickets(int cantidad) {
-        if (cantidad <= tickets) {
-            tickets -= cantidad;
-        }
-    }
     
     public void mostrarInformacionMaquina() {
         System.out.println("Maquina: " + nombre);
