@@ -3,7 +3,7 @@ public class Premios {
     private String nombre;
     private int costoTickets;
 
-    public Premio(String nombre, int costoTickets) {
+    public Premios(String nombre, int costoTickets) {
         this.nombre = nombre;
         this.costoTickets = costoTickets;
     }
