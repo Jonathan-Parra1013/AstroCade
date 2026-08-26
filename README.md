@@ -22,7 +22,7 @@ El sistema está diseñado utilizando los principios de la **Programación Orien
 
 # 3.MaquinaArcade
 * **Responsabilidad:** Simula las maquinas de un Arcade, contando con sus atributos mismos.
-* **Por qué se modeló así:** Se modeló como una clase independiente que **depende de uso** al recibir una `TarjetaArcade` como parámetro en su método `jugar()`. Esto le permite evaluar el costo de la jugada, descontar saldo y otorgar tickets en función del puntaje obtenido sin necesidad de almacenar datos de usuarios permanentemente
+* **Por qué se modeló así:** Se modeló como una clase independiente que **depende de uso** al recibir una `Tarjeta` como parámetro en su método `jugar()`. Esto le permite evaluar el costo de la jugada, descontar saldo y otorgar tickets en función del puntaje obtenido sin necesidad de almacenar datos de usuarios permanentemente
 
 # 4.Premio
 * **Responsabilidad:** Controla los artículos disponibles en el mostrador de redención.
