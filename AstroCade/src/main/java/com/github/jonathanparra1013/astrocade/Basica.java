@@ -8,6 +8,14 @@ package com.github.jonathanparra1013.astrocade;
  *
  * @author jonap
  */
-public class Basica {
-    
+// Tarjeta Basic (Sin descuento)
+class Basica extends Tarjeta {
+    public Basica(String idTarjeta) {
+        super(idTarjeta, 50000); // Límite de saldo
+    }
+
+    @Override
+    public double calcularDescuento(double costoBase) {
+        return costoBase; // 0% de descuento
+    }
 }
