@@ -6,8 +6,30 @@ package com.github.jonathanparra1013.astrocade;
 
 /**
  *
- * @author jonap
+ * @author nicolas
  */
-public class Maquina {
-    
+public abstract class MaquinaArcade {
+
+    private String nombre;
+    private double precioPartida;
+
+    public MaquinaArcade(String nombre, double precioPartida) {
+        this.nombre = nombre;
+        this.precioPartida = precioPartida;
+    }
+
+    public abstract void jugar(Tarjeta tarjeta);
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getPrecioPartida() {
+        return precioPartida;
+    }
+
+    public void mostrarInformacionMaquina() {
+        System.out.println("Maquina: " + nombre);
+        System.out.println("Precio por partida: $" + precioPartida);
+    }
 }
