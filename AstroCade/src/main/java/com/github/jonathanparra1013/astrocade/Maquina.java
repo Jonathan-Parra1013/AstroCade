@@ -8,12 +8,12 @@ package com.github.jonathanparra1013.astrocade;
  *
  * @author nicolas
  */
-public abstract class MaquinaArcade {
+public abstract class Maquina {
 
     private String nombre;
     private double precioPartida;
 
-    public MaquinaArcade(String nombre, double precioPartida) {
+    public Maquina(String nombre, double precioPartida) {
         this.nombre = nombre;
         this.precioPartida = precioPartida;
     }
