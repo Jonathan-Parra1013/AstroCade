@@ -41,9 +41,10 @@ public class IngresarVista extends javax.swing.JFrame {
     private void inicializarDatosLogica() {
         // Datos de prueba iniciales
         admin = new Administrador("ADM-01", "Administrador Principal", "admin@astrocade.com", "1234");
-        cliente = new Cliente("CLI-01", "Jonathan Parra", "jonathan@email.com", new Date());
+        cliente  = new Cliente("CLI-01", "Juanito Perez", "juanito@email.com", new Date());
         tarjeta = new Diamond("TARJ-001");
         tarjeta.recargarSaldo(100000); 
+       
 
         // Máquinas y premios
         PremioPorMaquina[] premiosGarra = { new PremioPorMaquina("Oso de Peluche", 5) };
