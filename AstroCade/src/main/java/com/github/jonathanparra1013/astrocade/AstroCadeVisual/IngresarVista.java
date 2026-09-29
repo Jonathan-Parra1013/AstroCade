@@ -35,7 +35,7 @@ public class IngresarVista extends javax.swing.JFrame {
     public IngresarVista() {
         initComponents();
         inicializarDatosLogica();
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setLocationRelativeTo(null); 
     }
 
     private void inicializarDatosLogica() {
@@ -43,7 +43,7 @@ public class IngresarVista extends javax.swing.JFrame {
         admin = new Administrador("ADM-01", "Administrador Principal", "admin@astrocade.com", "1234");
         cliente = new Cliente("CLI-01", "Jonathan Parra", "jonathan@email.com", new Date());
         tarjeta = new Diamond("TARJ-001");
-        tarjeta.recargarSaldo(100000); // Saldo inicial para pruebas
+        tarjeta.recargarSaldo(100000); 
 
         // Máquinas y premios
         PremioPorMaquina[] premiosGarra = { new PremioPorMaquina("Oso de Peluche", 5) };

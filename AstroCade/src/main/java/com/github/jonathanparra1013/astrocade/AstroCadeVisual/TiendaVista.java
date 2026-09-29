@@ -276,7 +276,6 @@ public class TiendaVista extends javax.swing.JFrame {
                 
                 JOptionPane.showMessageDialog(this, "¡Felicidades! Has redimido exitosamente: " + nombrePremio);
                 
-                // Recargamos los datos para que la tabla refleje los tickets descontados al instante
                 cargarDatosTienda();
             } else {
                 JOptionPane.showMessageDialog(this, "No tienes suficientes tickets para redimir este premio.", "Saldo Insuficiente", JOptionPane.ERROR_MESSAGE);

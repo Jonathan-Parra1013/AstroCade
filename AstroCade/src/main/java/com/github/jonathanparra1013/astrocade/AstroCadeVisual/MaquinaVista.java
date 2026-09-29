@@ -175,7 +175,6 @@ public class MaquinaVista extends javax.swing.JFrame {
         System.out.flush();
         System.setOut(old);
         
-        // Mostramos el resultado de la simulación en el área de texto
         jTextArea1.setText(baos.toString());
         
     }//GEN-LAST:event_jButton2ActionPerformed

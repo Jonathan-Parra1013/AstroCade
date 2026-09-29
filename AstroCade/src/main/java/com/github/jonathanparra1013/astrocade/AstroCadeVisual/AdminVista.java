@@ -47,22 +47,22 @@ public class AdminVista extends javax.swing.JFrame {
     }
     
     private void cargarTablaCuentas() {
-        // Definimos las columnas que ya diseñaste: Nombre, Correo, Tipo, Contraseña
+        
         String[] columnas = {"Nombre", "Correo", "Tipo", "Contraseña"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-        // Agregamos al Administrador si existe
+        
         if (admin != null) {
-            // Nota: Como 'password' es privado en Administrador, si no tienes un getter puedes mostrar un texto genérico o agregar getPassword() en tu clase Administrador.
+            
             modelo.addRow(new Object[]{admin.getNombre(), admin.getEmail(), "Administrador", "****"});
         }
 
-        // Agregamos al Cliente si existe
+      
         if (cliente != null) {
             modelo.addRow(new Object[]{cliente.getNombre(), cliente.getEmail(), "Cliente", "N/A"});
         }
 
-        // Asignamos el modelo a tu jTable2
+       
         jTable2.setModel(modelo);
     }
 
