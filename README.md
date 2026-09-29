@@ -6,37 +6,41 @@ Sistema de simulación de un Arcade desarrollado en **Java (Programacion Orienta
 - Nicolas Solarte Moncada
 
 ## Descripción del Dominio
-El dominio modela el ciclo operativo de un arcade digital actual (reemplazando las fichas físicas por tarjetas electrónicas). El sistema permite registrar clientes, realizar recargas de saldo monetario, simular partidas en diferentes máquinas recreativas con base en un puntaje (*score*), acumular y transferir tickets de recompensa, y canjear premios manteniendo una estricta integridad de inventario y datos
+El dominio modela el ciclo operativo de un arcade digital avanzado (reemplazando fichas físicas por tarjetas electrónicas). El sistema permite registrar clientes con validación automática de cumpleaños y administradores con seguridad por contraseña, gestionar tarjetas inteligentes con límites y descuentos polimórficos (Basica, Gold, Diamond), simular partidas en máquinas especializadas mediante herencia, acumular tickets y controlar eventos globales en tiempo real (Black Friday) manteniendo una estricta integridad de inventario y datos.
 
 ## Clases Elegidas 
 
-El sistema está diseñado utilizando los principios de la **Programación Orientada a Objetos (POO)** con un encapsulamiento estricto (private en atributos) y validaciones lógicas en constructores y métodos. Las clases principales son:
+El sistema está diseñado utilizando los principios avanzados de la Programación Orientada a Objetos (POO) con un encapsulamiento estricto (private en atributos) y validaciones lógicas. Las clases y jerarquías principales son:
 
-# 1.Usuario
-* **Responsabilidad:** Administra la identidad del cliente y gestiona la portabilidad temporal de una tarjeta de juego.
-* **Por qué se modeló así:** Se diseñó así para imitar la vida real: una persona y una tarjeta no son la misma cosa. El usuario tiene su nombre y su ID, pero dentro de sus atributos guarda una conexión con una TarjetaArcade. Esto permite que el usuario pueda tener una tarjeta asignada, quedárselo sin ella, o incluso prestarla o transferirla a otra persona para que juegue con su saldo
+# Jerarquía de Usuarios (Usuario, Cliente, Administrador)
+* **Responsabilidad:** Administrar la identidad de las personas en el sistema.
+* **Por qué se modeló así:** Se estructuró mediante herencia. La clase padre Usuario maneja los datos base, mientras que Cliente incorpora la validación automática de la fecha de nacimiento para otorgar beneficios de cumpleaños, y Administrador incorpora seguridad por contraseña para restringir el acceso a la gestión global.
   
-# 2.Tarjeta
-* **Responsabilidad:** Funciona como la entidad autónoma de transacciones económicas y de recompensa.
-* **Por qué se modeló así:** Se separó del usuario para que el saldo en dinero y los tickets acumulados residan en la tarjeta misma de forma independiente. Contiene la lógica de validación para evitar montos negativos en recargas, consumos sin saldo suficiente o descuentos inválidos
+# 2.Jerarquía de Tarjetas (Tarjeta - Clase Abstracta y Polimorfismo)
+* **Responsabilidad:** Funcionar como la entidad autónoma de transacciones económicas y de recompensa.
+* **Por qué se modeló así:** Se diseñó como una clase abstracta con identificadores generados automáticamente. Las clases hijas (Basica, Gold, Diamond) implementan polimorfismo mediante @Override para calcular descuentos personalizados (0%, 10%, 25%) y definir topes de saldo máximos.
 
-# 3.MaquinaArcade
-* **Responsabilidad:** Simula las maquinas de un Arcade, contando con sus atributos mismos.
-* **Por qué se modeló así:** Se modeló como una clase independiente que **depende de uso** al recibir una `Tarjeta` como parámetro en su método `jugar()`. Esto le permite evaluar el costo de la jugada, descontar saldo y otorgar tickets en función del puntaje obtenido sin necesidad de almacenar datos de usuarios permanentemente
+# 3.Jerarquía de Máquinas (Maquina y especializadas)
+* **Responsabilidad:** Simular las atracciones mecánicas del arcade (como MaquinaGarra, MaquinaCarreras, etc.).
+* **Por qué se modeló así:** Heredan de una clase padre Maquina que controla el estado operativo (Activa o En Mantenimiento). Utilizan una dependencia de uso al recibir la tarjeta como parámetro para descontar saldos y otorgar tickets.
 
-# 4.Premios
-* **Responsabilidad:** Controla los artículos disponibles en el mostrador de redención.
-* **Por qué se modeló así:** Se estructuró para gestionar un inventario de que premios hay disponibles y validar el costo requerido en tickets. Interactúa mediante una **dependencia de transacción** al verificar el balance de la tarjeta y descontar automaticamente las unidades del premio al completarse la compra
+# Gestión de Premios y Eventos (Premios, Evento)
+* **Responsabilidad:** Controlar el inventario en el mostrador de redención y las reglas temporales del local.
+* **Por qué se modeló así:** Permiten validar el costo en tickets requeridos, descontar stock en tiempo real y modular el costo de las partidas según eventos globales como el Black Friday.
 
 # Instrucciones Ejecución Codigo:
-* Lo primero hacer descarga de la carpeta AstroCade, la cual te permitira tener acceso al codigo, y su ejecucion
-* Abir Netbeans
+* Lo primero hacer Descarga o clona la carpeta del proyecto AstroCade para tener acceso a los archivos fuente, y su ejecucion
+* Abre tu entorno de desarrollo Apache NetBeans.
 * En el menu superior en la pestaña **file**, selecciona **Open Project**
 * El siguiente paso es navegar hasta la direccion/ubicacion de la carpeta **AstroCade**
 * Abrir el Archivo
-* Tendras acceso al main (AstroCade_Main.java), y las clases correspondientes: MaquinaArcade.java - Premios.java - Tarjeta.java - Usuario.java
-* Al momento de ejecutarlo se abrira un menu, el cual te permitira seleccionar que acción deseas realizar: Ver estado de los usuarios, de la tarjeta - Recargar la tarjeta - prestar o transferir tarjeta - simular una partida - canjear un premio -ya por ultimo salir
-* Cada opción del menu te permite realizar una parte de la simulación del arcade
-* Actualmente tenemos tres Usuarios, Solo hay una Tarjeta, Existen tres premios (Peluche, Audifonos, Consola) y dos maquinas, por ahora el codigo cuenta siendo un prototipo, con planificación a una alta evolucion tanto para más usuarios - tarjetas - maquinas - premios
+* Abre el archivo principal de ejecución (AstroCade.java dentro del paquete correspondiente).
+* Al ejecutarlo, se abrirá un menú interactivo en la consola que te permitirá:
+* - Registrar nuevos clientes y asignarles su tarjeta de forma automática.
+  - Entrar como cliente para consultar saldos y jugar en las máquinas.
+  - Entrar como administrador (ingresando la contraseña de seguridad) para recargar tarjetas, poner máquinas en mantenimiento o cambiar el evento global.
+  - Canjear premios utilizando los tickets acumulados.
+  
+
 
 *Universidad Libre Facultad de Ingeniería*
