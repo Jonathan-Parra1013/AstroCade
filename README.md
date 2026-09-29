@@ -35,8 +35,7 @@ El sistema está diseñado utilizando los principios avanzados de la Programaci�
 * El siguiente paso es navegar hasta la direccion/ubicacion de la carpeta **AstroCade**
 * Abrir el Archivo
 * Abre el archivo principal de ejecución (AstroCade.java dentro del paquete correspondiente).
-* Al ejecutarlo, se abrirá un menú interactivo en la consola que te permitirá:
-* - Registrar nuevos clientes y asignarles su tarjeta de forma automática.
+* Al ejecutarlo, se abrirá un menú interactivo en un jframe (interfaz grafica) que te permitirá:
   - Entrar como cliente para consultar saldos y jugar en las máquinas.
   - Entrar como administrador (ingresando la contraseña de seguridad) para recargar tarjetas, poner máquinas en mantenimiento o cambiar el evento global.
   - Canjear premios utilizando los tickets acumulados.
