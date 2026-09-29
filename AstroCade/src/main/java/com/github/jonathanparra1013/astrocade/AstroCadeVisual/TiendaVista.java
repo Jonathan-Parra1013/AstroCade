@@ -268,14 +268,14 @@ public class TiendaVista extends javax.swing.JFrame {
         if (tarjeta != null) {
             if (tarjeta.getSaldoTickets() >= costoTickets) {
                 
-                
                 int nuevoSaldoTickets = tarjeta.getSaldoTickets() - costoTickets;
-                
-                
                 tarjeta.setSaldoTickets(nuevoSaldoTickets); 
+              
+                if (cliente != null) {
+                    cliente.agregarPremio(nombrePremio);
+                }
                 
                 JOptionPane.showMessageDialog(this, "¡Felicidades! Has redimido exitosamente: " + nombrePremio);
-                
                 cargarDatosTienda();
             } else {
                 JOptionPane.showMessageDialog(this, "No tienes suficientes tickets para redimir este premio.", "Saldo Insuficiente", JOptionPane.ERROR_MESSAGE);

@@ -12,6 +12,7 @@ import com.github.jonathanparra1013.astrocade.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ClienteVista extends javax.swing.JFrame {
     
@@ -30,6 +31,7 @@ public class ClienteVista extends javax.swing.JFrame {
     public ClienteVista() {
         initComponents();
         setLocationRelativeTo(null);
+        cargarComboBoxClientes();
     }
 
     public ClienteVista(Cliente cliente, Tarjeta tarjeta, 
@@ -43,17 +45,18 @@ public class ClienteVista extends javax.swing.JFrame {
         this.garra = garra;
         initComponents();
         setLocationRelativeTo(null);
+        cargarComboBoxClientes();
         cargarDatosCliente();
     }
 
     private void cargarDatosCliente() {
         if (cliente != null && tarjeta != null) {
             
-            String premiosStr = "Ninguno"; 
-           
+            String premiosStr = cliente.getPremiosTexto(); 
+
             DefaultTableModel modelo1 = new DefaultTableModel(new String[]{"Nombre", "Saldo", "Tickets", "Premios"}, 0);
             modelo1.addRow(new Object[]{
-                cliente.getNombre(), "$" + tarjeta.getSaldoJugadas(), tarjeta.getSaldoTickets(), premiosStr 
+                cliente.getNombre(), "$" + tarjeta.getSaldoJugadas(), tarjeta.getSaldoTickets(),premiosStr 
             });
             jTable1.setModel(modelo1);
         }
@@ -71,6 +74,7 @@ public class ClienteVista extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -90,6 +94,9 @@ public class ClienteVista extends javax.swing.JFrame {
 
         jLabel2.setText("CLIENTE");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -101,7 +108,9 @@ public class ClienteVista extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,19 +119,21 @@ public class ClienteVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Saldo", "Tickets"
+                "Nombre", "Saldo", "Tickets", "Premios"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -273,6 +284,24 @@ public class ClienteVista extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Información del cliente actualizada con éxito :D");
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        int opcion = jComboBox1.getSelectedIndex();
+        if (opcion > 0) {
+        
+            GestorClientes.ClienteConTarjeta seleccionado = GestorClientes.getClientes().get(opcion - 1);
+            this.cliente = seleccionado.getCliente();
+            this.tarjeta = seleccionado.getTarjeta();
+            cargarDatosCliente(); 
+    }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void cargarComboBoxClientes() {
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Seleccione");
+        for (GestorClientes.ClienteConTarjeta cc : GestorClientes.getClientes()) {
+            jComboBox1.addItem((String) cc.getCliente().getNombre());
+    }
+}
     /**
      * @param args the command line arguments
      */
@@ -305,6 +334,7 @@ public class ClienteVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

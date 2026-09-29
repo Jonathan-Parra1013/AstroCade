@@ -5,6 +5,8 @@
 package com.github.jonathanparra1013.astrocade;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author jonap
@@ -13,6 +15,7 @@ import java.util.Date;
 
 public class Cliente extends Usuario {
     private Date fechaNacimiento;
+    private List<String> premiosRedimidos = new ArrayList<>();
 
     public Cliente(String id, String nombre, String email, Date fechaNacimiento) {
         super(id, nombre, email);
@@ -44,5 +47,16 @@ public class Cliente extends Usuario {
 
     public Object getEmail() {
        return super.email;
+    }
+    
+    public void agregarPremio(String premio) {
+        this.premiosRedimidos.add(premio);
+    }
+
+    public String getPremiosTexto() {
+        if (premiosRedimidos.isEmpty()) {
+            return "Ninguno";
+        }
+        return String.join(", ", premiosRedimidos);
     }
 }

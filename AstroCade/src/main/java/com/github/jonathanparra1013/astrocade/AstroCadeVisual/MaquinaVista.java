@@ -37,10 +37,12 @@ public class MaquinaVista extends javax.swing.JFrame {
                         MaquinaDisparos disparos, MaquinaGarra garra, JFrame ventanaAnterior) {
         this.cliente = cliente;
         this.tarjeta = tarjeta;
-        this.ruleta = ruleta;
-        this.carreras = carreras;
-        this.disparos = disparos;
-        this.garra = garra;
+        
+        this.ruleta = (ruleta != null) ? ruleta : new MaquinaRuleta("Ruleta", 5000, null);
+        this.carreras = (carreras != null) ? carreras : new MaquinaCarreras("Carreras", 3000);
+        this.disparos = (disparos != null) ? disparos : new MaquinaDisparos("Disparos", 4000);
+        this.garra = (garra != null) ? garra : new MaquinaGarra("Garra", 2500, null);
+        
         this.ventanaAnterior = ventanaAnterior;
         initComponents();
         setLocationRelativeTo(null);
@@ -146,8 +148,15 @@ public class MaquinaVista extends javax.swing.JFrame {
         int seleccion = jComboBox1.getSelectedIndex();
         if (seleccion <= 0) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una máquina válida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;}
-            
+            return;
+        }
+        
+        // Verificación rápida para depurar
+        if (tarjeta == null) {
+            JOptionPane.showMessageDialog(this, "Error: La tarjeta está vacía o es nula.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         PrintStream old = System.out;
@@ -156,16 +165,32 @@ public class MaquinaVista extends javax.swing.JFrame {
         try {
             switch (seleccion) {
                 case 1:
-                    if (carreras != null) carreras.jugar(tarjeta);
+                    if (carreras != null) {
+                        carreras.jugar(tarjeta);
+                    } else {
+                        System.out.println("Error: La máquina de Carreras es nula.");
+                    }
                     break;
                 case 2:
-                    if (disparos != null) disparos.jugar(tarjeta);
+                    if (disparos != null) {
+                        disparos.jugar(tarjeta);
+                    } else {
+                        System.out.println("Error: La máquina de Disparos es nula.");
+                    }
                     break;
                 case 3:
-                    if (garra != null) garra.jugar(tarjeta);
+                    if (garra != null) {
+                        garra.jugar(tarjeta);
+                    } else {
+                        System.out.println("Error: La máquina de Garra es nula.");
+                    }
                     break;
                 case 4:
-                    if (ruleta != null) ruleta.jugar(tarjeta);
+                    if (ruleta != null) {
+                        ruleta.jugar(tarjeta);
+                    } else {
+                        System.out.println("Error: La máquina de Ruleta es nula.");
+                    }
                     break;
             }
         } catch (Exception e) {
