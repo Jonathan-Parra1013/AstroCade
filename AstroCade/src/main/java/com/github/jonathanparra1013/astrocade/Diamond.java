@@ -9,7 +9,7 @@ package com.github.jonathanparra1013.astrocade;
  * @author jonap
  */
 // Tarjeta Diamond (25% de descuento)
-class Diamond extends Tarjeta {
+public class Diamond extends Tarjeta {
     public Diamond(String idTarjeta) {
         super(idTarjeta, 1000000);
     }

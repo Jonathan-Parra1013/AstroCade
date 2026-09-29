@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 
-class Cliente extends Usuario {
+public class Cliente extends Usuario {
     private Date fechaNacimiento;
 
     public Cliente(String id, String nombre, String email, Date fechaNacimiento) {
@@ -36,5 +36,13 @@ class Cliente extends Usuario {
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;
+    }
+    
+    public Object getNombre() {
+        return super.nombre;
+    }
+
+    public Object getEmail() {
+       return super.email;
     }
 }

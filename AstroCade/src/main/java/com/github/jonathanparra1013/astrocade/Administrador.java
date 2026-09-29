@@ -8,7 +8,7 @@ package com.github.jonathanparra1013.astrocade;
  *
  * @author jonap
  */
-class Administrador extends Usuario {
+public class Administrador extends Usuario {
     private String password;
 
     public Administrador(String id, String nombre, String email, String password) {
@@ -33,5 +33,13 @@ class Administrador extends Usuario {
     public void cambiarEstadoMaquina(Maquina maquina, String nuevoEstado) {
         maquina.setEstado(nuevoEstado);
         System.out.println("La maquina " + maquina.getNombre() + " ahora esta: " + nuevoEstado);
+    }
+
+    public Object getNombre() {
+        return super.nombre;
+    }
+
+    public Object getEmail() {
+       return super.email;
     }
 }

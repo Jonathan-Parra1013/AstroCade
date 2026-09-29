@@ -8,7 +8,7 @@ package com.github.jonathanparra1013.astrocade;
  *
  * @author jonap
  */
-public abstract class PremioPorMaquina extends Premios implements Entregable {
+public class PremioPorMaquina extends Premios implements Entregable {
 
     public PremioPorMaquina(String nombre, int stock) {
         super(nombre, stock);

@@ -9,7 +9,7 @@ package com.github.jonathanparra1013.astrocade;
  * @author jonap
  */
 // Tarjeta Gold (10% de descuento)
-class Gold extends Tarjeta {
+public class Gold extends Tarjeta {
     public Gold(String idTarjeta) {
         super(idTarjeta, 200000);
     }

@@ -9,7 +9,7 @@ package com.github.jonathanparra1013.astrocade;
  * @author jonap
  */
 // Tarjeta Basic (Sin descuento)
-class Basica extends Tarjeta {
+public class Basica extends Tarjeta {
     public Basica(String idTarjeta) {
         super(idTarjeta, 50000); // Límite de saldo
     }

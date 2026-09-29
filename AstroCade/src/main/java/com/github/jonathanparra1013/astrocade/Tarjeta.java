@@ -58,5 +58,9 @@ public abstract class Tarjeta {
     public int getSaldo() { return saldoJugadas; } // Usado en las máquinas
     public int getTickets() { return saldoTickets; } // Usado en las máquinas
     public String getNumeroTarjeta() { return idTarjeta; } // Usado en PremioPorTickets
+
+    public void setSaldoTickets(int nuevoSaldoTickets) {
+        this.saldoTickets = nuevoSaldoTickets;
+    }
 }
 
