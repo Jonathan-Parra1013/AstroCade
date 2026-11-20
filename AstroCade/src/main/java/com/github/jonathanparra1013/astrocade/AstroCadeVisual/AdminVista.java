@@ -14,6 +14,7 @@ import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 public class AdminVista extends javax.swing.JFrame {
     
+    private final AstroCadeFacade fachada = new AstroCadeFacade();
     private Administrador admin;
     private Cliente cliente;
     private Tarjeta tarjeta;
@@ -328,14 +329,22 @@ public class AdminVista extends javax.swing.JFrame {
         Maquina maquinaElegida = null;
 
         switch (seleccion) {
-            case 1: maquinaElegida = carreras; break;
-            case 2: maquinaElegida = disparos; break;
-            case 3: maquinaElegida = garra; break;
-            case 4: maquinaElegida = ruleta; break;
+            case 1:
+                maquinaElegida = carreras;
+                break;
+            case 2:
+                maquinaElegida = disparos;
+                break;
+            case 3:
+                maquinaElegida = garra;
+                break;
+            case 4:
+                maquinaElegida = ruleta;
+                break;
         }
 
         if (maquinaElegida != null && admin != null) {
-            admin.ponerMaquinaEnMantenimiento(maquinaElegida);
+            fachada.ponerMaquinaEnMantenimiento(admin, maquinaElegida);
             JOptionPane.showMessageDialog(this, "Máquina " + maquinaElegida.getNombre() + " puesta en mantenimiento.");
         } else {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una máquina válida del menú.", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -348,7 +357,7 @@ public class AdminVista extends javax.swing.JFrame {
             try {
                 int cantidad = Integer.parseInt(input);
                 if (admin != null && tarjeta != null) {
-                    admin.recargarTarjeta(tarjeta, cantidad);
+                    fachada.recargarTarjeta(admin, tarjeta, cantidad);
                     JOptionPane.showMessageDialog(this, "¡Tarjeta recargada con éxito! Nuevo saldo: $" + tarjeta.getSaldoJugadas());
                 }
             } catch (NumberFormatException ex) {
@@ -369,11 +378,12 @@ public class AdminVista extends javax.swing.JFrame {
                 return;
             }
 
-            Cliente nuevoCliente = new Cliente(idTarjeta, nombre, correo, new java.util.Date());
-            Tarjeta nuevaTarjeta = new Gold(idTarjeta);
-            nuevaTarjeta.recargarSaldo(saldoInicial);
-
-            GestorClientes.agregarCliente(nuevoCliente, nuevaTarjeta);
+            fachada.registrarCliente(
+                    idTarjeta,
+                    nombre,
+                    correo,
+                    saldoInicial,
+                    TarjetaFactory.TipoTarjeta.GOLD);
 
             JOptionPane.showMessageDialog(this, "¡Cliente registrado con éxito!");
             

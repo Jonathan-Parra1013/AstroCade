@@ -11,11 +11,6 @@ package com.github.jonathanparra1013.astrocade;
 // Tarjeta Gold (10% de descuento)
 public class Gold extends Tarjeta {
     public Gold(String idTarjeta) {
-        super(idTarjeta, 200000);
-    }
-
-    @Override
-    public double calcularDescuento(double costoBase) {
-        return costoBase * 0.90; // 10% de descuento
+        super(idTarjeta, 200000, new DescuentoGold());
     }
 }

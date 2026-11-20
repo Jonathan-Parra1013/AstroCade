@@ -11,11 +11,6 @@ package com.github.jonathanparra1013.astrocade;
 // Tarjeta Basic (Sin descuento)
 public class Basica extends Tarjeta {
     public Basica(String idTarjeta) {
-        super(idTarjeta, 50000); // Límite de saldo
-    }
-
-    @Override
-    public double calcularDescuento(double costoBase) {
-        return costoBase; // 0% de descuento
+        super(idTarjeta, 50000, new DescuentoBasico());
     }
 }

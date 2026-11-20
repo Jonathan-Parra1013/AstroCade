@@ -14,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 public class MaquinaVista extends javax.swing.JFrame {
     
+    private final AstroCadeFacade fachada = new AstroCadeFacade();
     private Cliente cliente;
     private Tarjeta tarjeta;
     private MaquinaRuleta ruleta;
@@ -38,10 +39,14 @@ public class MaquinaVista extends javax.swing.JFrame {
         this.cliente = cliente;
         this.tarjeta = tarjeta;
         
-        this.ruleta = (ruleta != null) ? ruleta : new MaquinaRuleta("Ruleta", 5000, null);
-        this.carreras = (carreras != null) ? carreras : new MaquinaCarreras("Carreras", 3000);
-        this.disparos = (disparos != null) ? disparos : new MaquinaDisparos("Disparos", 4000);
-        this.garra = (garra != null) ? garra : new MaquinaGarra("Garra", 2500, null);
+        this.ruleta = (ruleta != null) ? ruleta : (MaquinaRuleta) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.RULETA, "Ruleta", 5000, null);
+        this.carreras = (carreras != null) ? carreras : (MaquinaCarreras) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.CARRERAS, "Carreras", 3000, null);
+        this.disparos = (disparos != null) ? disparos : (MaquinaDisparos) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.DISPAROS, "Disparos", 4000, null);
+        this.garra = (garra != null) ? garra : (MaquinaGarra) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.GARRA, "Garra", 2500, null);
         
         this.ventanaAnterior = ventanaAnterior;
         initComponents();
@@ -166,28 +171,28 @@ public class MaquinaVista extends javax.swing.JFrame {
             switch (seleccion) {
                 case 1:
                     if (carreras != null) {
-                        carreras.jugar(tarjeta);
+                        fachada.jugar(carreras, tarjeta);
                     } else {
                         System.out.println("Error: La máquina de Carreras es nula.");
                     }
                     break;
                 case 2:
                     if (disparos != null) {
-                        disparos.jugar(tarjeta);
+                        fachada.jugar(disparos, tarjeta);
                     } else {
                         System.out.println("Error: La máquina de Disparos es nula.");
                     }
                     break;
                 case 3:
                     if (garra != null) {
-                        garra.jugar(tarjeta);
+                        fachada.jugar(garra, tarjeta);
                     } else {
                         System.out.println("Error: La máquina de Garra es nula.");
                     }
                     break;
                 case 4:
                     if (ruleta != null) {
-                        ruleta.jugar(tarjeta);
+                        fachada.jugar(ruleta, tarjeta);
                     } else {
                         System.out.println("Error: La máquina de Ruleta es nula.");
                     }

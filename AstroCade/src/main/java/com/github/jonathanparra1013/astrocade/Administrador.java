@@ -21,7 +21,7 @@ public class Administrador extends Usuario {
     }
     
     public void ponerMaquinaEnMantenimiento(Maquina maquina) {
-        maquina.setEstado("Mantenimiento");
+        maquina.ponerEnMantenimiento();
         System.out.println("Maquina " + maquina.getNombre() + " puesta en mantenimiento.");
     }
 

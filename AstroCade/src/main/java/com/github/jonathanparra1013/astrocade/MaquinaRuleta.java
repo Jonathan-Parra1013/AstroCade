@@ -20,10 +20,12 @@ public class MaquinaRuleta extends Maquina {
     }
 
     @Override
-    public void jugar(Tarjeta tarjeta) {
+    protected void jugarPartida(Tarjeta tarjeta) {
 
         // Verificar y descontar saldo
-        if (!tarjeta.descontarSaldo(getPrecioPartida())) {
+        double costoFinal = tarjeta.calcularDescuento(getPrecioPartida());
+
+        if (!tarjeta.descontarSaldo(costoFinal)) {
 
             System.out.println("//////////////////////////////");
             System.out.println("        MAQUINA RULETA");

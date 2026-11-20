@@ -15,9 +15,11 @@ public class MaquinaCarreras extends Maquina {
     }
 
     @Override
-    public void jugar(Tarjeta tarjeta) {
+    protected void jugarPartida(Tarjeta tarjeta) {
 
-        if (tarjeta.descontarSaldo(getPrecioPartida())) {
+        double costoFinal = tarjeta.calcularDescuento(getPrecioPartida());
+
+        if (tarjeta.descontarSaldo(costoFinal)) {
 
             System.out.println("//////////////////////////////");
             System.out.println("      JUEGO DE CARRERAS");
