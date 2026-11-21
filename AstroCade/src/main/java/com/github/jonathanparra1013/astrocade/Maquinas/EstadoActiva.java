@@ -1,4 +1,6 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Maquinas;
+
+import com.github.jonathanparra1013.astrocade.Maquinas.EstadoMaquina;
 
 public class EstadoActiva implements EstadoMaquina {
     @Override

@@ -1,5 +1,12 @@
 package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
+import com.github.jonathanparra1013.astrocade.Premios.PremioPorTickets;
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
+import com.github.jonathanparra1013.astrocade.Tarjetas.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Usuarios.GestorClientes;
+import com.github.jonathanparra1013.astrocade.Usuarios.Administrador;
+import com.github.jonathanparra1013.astrocade.Usuarios.Cliente;
 import com.github.jonathanparra1013.astrocade.BaseDatos.ClienteDAO;
 import com.github.jonathanparra1013.astrocade.Repositorios.ClienteRepositorio;
 import com.github.jonathanparra1013.astrocade.BaseDatos.EventoDAO;

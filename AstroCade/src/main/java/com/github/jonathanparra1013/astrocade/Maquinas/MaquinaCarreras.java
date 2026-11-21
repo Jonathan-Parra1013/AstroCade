@@ -2,15 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Maquinas;
+
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
 
 /**
  *
  * @author jonap
  */
-public class MaquinaDisparos extends Maquina {
+public class MaquinaCarreras extends Maquina {
 
-    public MaquinaDisparos(String nombre, double precioPartida) {
+    public MaquinaCarreras(String nombre, double precioPartida) {
         super(nombre, precioPartida);
     }
 
@@ -20,24 +23,23 @@ public class MaquinaDisparos extends Maquina {
         if (cobrarPartida(tarjeta)) {
 
             System.out.println("//////////////////////////////");
-            System.out.println("       JUEGO DE DISPAROS");
+            System.out.println("      JUEGO DE CARRERAS");
             System.out.println("//////////////////////////////");
             System.out.println("Maquina: " + getNombre());
 
-            int puntuacion = (int) (Math.random() * 10000);
+            int posicion = (int) (Math.random() * 3) + 1;
 
-            System.out.println("Puntuacion: " + puntuacion);
+            System.out.println("Carrera terminada.");
+            System.out.println("Llegaste en la posicion: " + posicion);
 
             int tickets;
 
-            if (puntuacion >= 8000) {
+            if (posicion == 1) {
                 tickets = 50;
-            } else if (puntuacion >= 5000) {
-                tickets = 25;
-            } else if (puntuacion >= 2000) {
-                tickets = 10;
+            } else if (posicion == 2) {
+                tickets = 20;
             } else {
-                tickets = 2;
+                tickets = 5;
             }
 
             tarjeta.agregarTickets(tickets);

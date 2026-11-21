@@ -1,6 +1,6 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
+import com.github.jonathanparra1013.astrocade.Usuarios.Administrador;
 import com.github.jonathanparra1013.astrocade.Repositorios.UsuarioRepositorio;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

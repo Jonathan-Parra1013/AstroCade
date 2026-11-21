@@ -1,9 +1,9 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.Usuarios.Cliente;
+import com.github.jonathanparra1013.astrocade.Usuarios.GestorClientes;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Tarjetas.TarjetaFactory;
 import com.github.jonathanparra1013.astrocade.Repositorios.ClienteRepositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

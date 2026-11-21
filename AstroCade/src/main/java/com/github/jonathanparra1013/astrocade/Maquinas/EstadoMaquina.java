@@ -1,4 +1,4 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Maquinas;
 
 public interface EstadoMaquina {
     String getNombre();

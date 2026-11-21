@@ -1,5 +1,7 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Usuarios;
 
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Usuarios.Usuario;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

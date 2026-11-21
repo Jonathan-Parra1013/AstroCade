@@ -1,6 +1,11 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Usuarios;
 
 //Administrador del arcade. Su contraseña se valida contra el hash guardado en la base de datos.
+
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Usuarios.Usuario;
+
 public class Administrador extends Usuario {
 
     private final String password;
