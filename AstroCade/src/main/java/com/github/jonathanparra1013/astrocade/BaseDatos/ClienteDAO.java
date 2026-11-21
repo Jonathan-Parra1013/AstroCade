@@ -1,10 +1,10 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
-import com.github.jonathanparra1013.astrocade.Basica;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Basica;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.Diamond;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Diamond;
 import com.github.jonathanparra1013.astrocade.GestorClientes;
-import com.github.jonathanparra1013.astrocade.Gold;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Gold;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

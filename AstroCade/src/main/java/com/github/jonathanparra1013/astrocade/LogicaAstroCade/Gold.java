@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.github.jonathanparra1013.astrocade;
+package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
 /**
  *
@@ -12,5 +12,10 @@ package com.github.jonathanparra1013.astrocade;
 public class Gold extends Tarjeta {
     public Gold(String idTarjeta) {
         super(idTarjeta, 200000, new DescuentoGold());
+    }
+
+    @Override
+    public String getTipo() {
+        return "Gold";
     }
 }
