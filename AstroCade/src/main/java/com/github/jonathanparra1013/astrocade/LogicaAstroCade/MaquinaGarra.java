@@ -20,10 +20,10 @@ public class MaquinaGarra extends Maquina {
     }
 
     @Override
-    public void jugar(Tarjeta tarjeta) {
+    protected void jugarPartida(Tarjeta tarjeta) {
 
         // Verificar y descontar el saldo
-        if (!tarjeta.descontarSaldo(getPrecioPartida())) {
+        if (!cobrarPartida(tarjeta)) {
 
             System.out.println("//////////////////////////////");
             System.out.println("        MAQUINA GARRA");
@@ -38,7 +38,7 @@ public class MaquinaGarra extends Maquina {
         System.out.println("//////////////////////////////");
 
         System.out.println("Maquina: " + getNombre());
-        System.out.println("Precio: $" + getPrecioPartida());
+        System.out.println("Precio: $" + calcularCostoPartida(tarjeta));
 
         // Buscar un premio disponible
         PremioPorMaquina premio = buscarPremioDisponible();
@@ -75,6 +75,9 @@ public class MaquinaGarra extends Maquina {
 
     private PremioPorMaquina buscarPremioDisponible() {
 
+        if (premios == null) {
+            return null;
+        }
         for (PremioPorMaquina premio : premios) {
 
             if (premio.hayStock()) {

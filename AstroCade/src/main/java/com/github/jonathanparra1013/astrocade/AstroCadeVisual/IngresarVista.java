@@ -12,7 +12,8 @@ import com.github.jonathanparra1013.astrocade.PremioPorMaquina;
 import com.github.jonathanparra1013.astrocade.Administrador;
 import com.github.jonathanparra1013.astrocade.Cliente;
 import com.github.jonathanparra1013.astrocade.Tarjeta;
-import com.github.jonathanparra1013.astrocade.Diamond;
+import com.github.jonathanparra1013.astrocade.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.MaquinaFactory;
 import com.github.jonathanparra1013.astrocade.MaquinaRuleta;
 import com.github.jonathanparra1013.astrocade.MaquinaCarreras;
 import com.github.jonathanparra1013.astrocade.MaquinaDisparos;
@@ -42,7 +43,9 @@ public class IngresarVista extends javax.swing.JFrame {
         // Datos de prueba iniciales
         admin = new Administrador("ADM-01", "Administrador Principal", "admin@astrocade.com", "1234");
         cliente  = new Cliente("CLI-01", "Juanito Perez", "juanito@email.com", new Date());
-        tarjeta = new Diamond("TARJ-001");
+        tarjeta = TarjetaFactory.crear(
+                TarjetaFactory.TipoTarjeta.DIAMOND,
+                "TARJ-001");
         tarjeta.recargarSaldo(100000); 
        
 
@@ -50,10 +53,26 @@ public class IngresarVista extends javax.swing.JFrame {
         PremioPorMaquina[] premiosGarra = { new PremioPorMaquina("Oso de Peluche", 5) };
         PremioPorMaquina[] premiosRuleta = { new PremioPorMaquina("Consola Mini", 2) };
 
-        ruleta = new MaquinaRuleta("Ruleta de la Fortuna", 5000, premiosRuleta);
-        carreras = new MaquinaCarreras("Speed Racer", 3000);
-        disparos = new MaquinaDisparos("Target Shooter", 4000);
-        garra = new MaquinaGarra("Garra Mágica", 2500, premiosGarra);
+        ruleta = (MaquinaRuleta) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.RULETA,
+                "Ruleta de la Fortuna",
+                5000,
+                premiosRuleta);
+        carreras = (MaquinaCarreras) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.CARRERAS,
+                "Speed Racer",
+                3000,
+                null);
+        disparos = (MaquinaDisparos) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.DISPAROS,
+                "Target Shooter",
+                4000,
+                null);
+        garra = (MaquinaGarra) MaquinaFactory.crear(
+                MaquinaFactory.TipoMaquina.GARRA,
+                "Garra Mágica",
+                2500,
+                premiosGarra);
     }
 
 

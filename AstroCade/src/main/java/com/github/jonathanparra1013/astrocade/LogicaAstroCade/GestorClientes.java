@@ -14,7 +14,9 @@ public class GestorClientes {
 
     static {
         Cliente c1 = new Cliente("CLI-01", "Juanito Perez", "juanito@email.com", new Date());
-        Tarjeta t1 = new Diamond("TARJ-001");
+        Tarjeta t1 = TarjetaFactory.crear(
+                TarjetaFactory.TipoTarjeta.DIAMOND,
+                "TARJ-001");
         t1.recargarSaldo(100000);
         listaGlobal.add(new ClienteConTarjeta(c1, t1));
     }

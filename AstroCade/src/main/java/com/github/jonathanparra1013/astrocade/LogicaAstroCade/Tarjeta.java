@@ -13,15 +13,27 @@ public abstract class Tarjeta {
     protected int saldoJugadas;
     protected int saldoTickets;
     protected int limiteSaldo;
+    private final EstrategiaDescuento estrategiaDescuento;
 
     public Tarjeta(String idTarjeta, int limiteSaldo) {
+        this(idTarjeta, limiteSaldo, new DescuentoBasico());
+    }
+
+    public Tarjeta(String idTarjeta, int limiteSaldo,
+                   EstrategiaDescuento estrategiaDescuento) {
         this.idTarjeta = idTarjeta;
         this.limiteSaldo = limiteSaldo;
         this.saldoJugadas = 0;
         this.saldoTickets = 0;
+        if (estrategiaDescuento == null) {
+            throw new IllegalArgumentException("La estrategia de descuento es obligatoria.");
+        }
+        this.estrategiaDescuento = estrategiaDescuento;
     }
 
-    public abstract double calcularDescuento(double costoBase);
+    public double calcularDescuento(double costoBase) {
+        return estrategiaDescuento.calcular(costoBase);
+    }
 
     public void recargarSaldo(int cantidad) {
         if ((this.saldoJugadas + cantidad) <= limiteSaldo) {

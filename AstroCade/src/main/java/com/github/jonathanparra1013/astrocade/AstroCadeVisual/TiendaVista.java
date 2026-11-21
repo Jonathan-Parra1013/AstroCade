@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 public class TiendaVista extends javax.swing.JFrame {
     
+    private final AstroCadeFacade fachada = new AstroCadeFacade();
    private Cliente cliente;
     private Tarjeta tarjeta;
     private MaquinaRuleta ruleta;
@@ -266,15 +267,7 @@ public class TiendaVista extends javax.swing.JFrame {
         }
 
         if (tarjeta != null) {
-            if (tarjeta.getSaldoTickets() >= costoTickets) {
-                
-                int nuevoSaldoTickets = tarjeta.getSaldoTickets() - costoTickets;
-                tarjeta.setSaldoTickets(nuevoSaldoTickets); 
-              
-                if (cliente != null) {
-                    cliente.agregarPremio(nombrePremio);
-                }
-                
+            if (fachada.redimirPremio(cliente, tarjeta, nombrePremio, costoTickets)) {
                 JOptionPane.showMessageDialog(this, "¡Felicidades! Has redimido exitosamente: " + nombrePremio);
                 cargarDatosTienda();
             } else {

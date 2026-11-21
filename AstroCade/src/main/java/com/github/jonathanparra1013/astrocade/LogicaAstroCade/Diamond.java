@@ -11,11 +11,6 @@ package com.github.jonathanparra1013.astrocade;
 // Tarjeta Diamond (25% de descuento)
 public class Diamond extends Tarjeta {
     public Diamond(String idTarjeta) {
-        super(idTarjeta, 1000000);
-    }
-
-    @Override
-    public double calcularDescuento(double costoBase) {
-        return costoBase * 0.75; // 25% de descuento
+        super(idTarjeta, 1000000, new DescuentoDiamond());
     }
 }

@@ -15,9 +15,9 @@ public class MaquinaDisparos extends Maquina {
     }
 
     @Override
-    public void jugar(Tarjeta tarjeta) {
+    protected void jugarPartida(Tarjeta tarjeta) {
 
-        if (tarjeta.descontarSaldo(getPrecioPartida())) {
+        if (cobrarPartida(tarjeta)) {
 
             System.out.println("//////////////////////////////");
             System.out.println("       JUEGO DE DISPAROS");
