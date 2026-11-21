@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.github.jonathanparra1013.astrocade;
+package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
 /**
  *
@@ -19,8 +19,17 @@ public class MaquinaGarra extends Maquina {
         this.premios = premios;
     }
 
+    public PremioPorMaquina[] getPremios() {
+        return premios;
+    }
+
     @Override
     protected void jugarPartida(Tarjeta tarjeta) {
+        // Si no hay premios, no se cobra la partida
+        if (buscarPremioDisponible() == null) {
+            System.out.println("No hay premios disponibles. No se cobró la partida.");
+            return;
+        }
 
         // Verificar y descontar el saldo
         if (!cobrarPartida(tarjeta)) {

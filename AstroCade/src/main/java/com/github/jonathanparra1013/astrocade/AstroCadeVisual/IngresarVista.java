@@ -8,17 +8,17 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
-import com.github.jonathanparra1013.astrocade.PremioPorMaquina;
-import com.github.jonathanparra1013.astrocade.Administrador;
-import com.github.jonathanparra1013.astrocade.Cliente;
-import com.github.jonathanparra1013.astrocade.Tarjeta;
-import com.github.jonathanparra1013.astrocade.TarjetaFactory;
-import com.github.jonathanparra1013.astrocade.MaquinaFactory;
-import com.github.jonathanparra1013.astrocade.MaquinaRuleta;
-import com.github.jonathanparra1013.astrocade.MaquinaCarreras;
-import com.github.jonathanparra1013.astrocade.MaquinaDisparos;
-import com.github.jonathanparra1013.astrocade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.PremioPorMaquina;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaFactory;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
 
 import javax.swing.*;
 import java.awt.*;

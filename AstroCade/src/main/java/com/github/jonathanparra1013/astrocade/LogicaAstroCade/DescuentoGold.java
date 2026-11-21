@@ -1,4 +1,4 @@
-package com.github.jonathanparra1013.astrocade;
+package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
 public class DescuentoGold implements EstrategiaDescuento {
     @Override
