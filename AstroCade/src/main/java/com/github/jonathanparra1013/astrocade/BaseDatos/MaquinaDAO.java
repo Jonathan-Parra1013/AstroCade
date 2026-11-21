@@ -1,12 +1,12 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Maquina;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaFactory;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Repositorios.MaquinaRepositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Acceso a datos de las máquinas, sus premios y el historial de partidas
-public class MaquinaDAO {
+public class MaquinaDAO implements MaquinaRepositorio {
 
     // Carga las máquinas (con el tipo de clase que corresponde) y los premios de Garra y Ruleta
+    @Override
     public List<Maquina> listar() throws PersistenciaException {
         String sql = "SELECT id, nombre, tipo, precio_partida, estado FROM maquinas ORDER BY id";
         List<Maquina> maquinas = new ArrayList<>();
@@ -28,23 +29,12 @@ public class MaquinaDAO {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     double precio = rs.getDouble("precio_partida");
-                    Maquina maquina;
-                    switch (rs.getString("tipo")) {
-                        case "CARRERAS":
-                            maquina = new MaquinaCarreras(nombre, precio);
-                            break;
-                        case "DISPAROS":
-                            maquina = new MaquinaDisparos(nombre, precio);
-                            break;
-                        case "GARRA":
-                            maquina = new MaquinaGarra(nombre, precio, cargarPremios(con, rs.getInt("id")));
-                            break;
-                        case "RULETA":
-                            maquina = new MaquinaRuleta(nombre, precio, cargarPremios(con, rs.getInt("id")));
-                            break;
-                        default:
-                            continue; // tipo que la aplicación no conoce
-                    }
+                    MaquinaFactory.TipoMaquina tipo = MaquinaFactory.TipoMaquina.valueOf(rs.getString("tipo"));
+                    // Solo Garra y Ruleta tienen premios; la fábrica decide qué clase crear
+                    PremioPorMaquina[] premios = (tipo == MaquinaFactory.TipoMaquina.GARRA
+                            || tipo == MaquinaFactory.TipoMaquina.RULETA)
+                            ? cargarPremios(con, rs.getInt("id")) : null;
+                    Maquina maquina = MaquinaFactory.crear(tipo, nombre, precio, premios);
                     maquina.setEstado(rs.getString("estado"));
                     maquinas.add(maquina);
                 }
@@ -71,6 +61,7 @@ public class MaquinaDAO {
     }
 
     /** Guarda el estado actual de la máquina ("Activa" o "Mantenimiento"). */
+    @Override
     public void actualizarEstado(Maquina maquina) throws PersistenciaException {
         String sql = "UPDATE maquinas SET estado = ? WHERE nombre = ?";
         try (PreparedStatement ps = Conexion.getConexion().prepareStatement(sql)) {
@@ -85,6 +76,7 @@ public class MaquinaDAO {
     }
 
     
+    @Override
     public void guardarPartida(Maquina maquina, Tarjeta tarjeta, int saldoAntes, int ticketsAntes)
             throws PersistenciaException {
         String sqlPartida = "INSERT INTO partidas (id_tarjeta, id_maquina, costo_cobrado, tickets_ganados) "

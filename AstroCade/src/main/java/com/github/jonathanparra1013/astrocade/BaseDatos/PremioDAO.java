@@ -3,6 +3,7 @@ package com.github.jonathanparra1013.astrocade.BaseDatos;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorTickets;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Repositorios.PremioRepositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Acceso a datos de los premios de la tienda (los que se pagan con tickets). 
-public class PremioDAO {
+public class PremioDAO implements PremioRepositorio {
 
+    @Override
     public List<PremioPorTickets> listarTienda() throws PersistenciaException {
         String sql = "SELECT nombre, stock, costo_tickets FROM premios WHERE tipo = 'TICKETS' ORDER BY id";
         List<PremioPorTickets> premios = new ArrayList<>();
@@ -30,6 +32,7 @@ public class PremioDAO {
     }
 
    
+    @Override
     public void redimir(Cliente cliente, Tarjeta tarjeta, PremioPorTickets premio) throws PersistenciaException {
         String sqlStock = "UPDATE premios SET stock = ? WHERE nombre = ? AND tipo = 'TICKETS'";
         String sqlRedencion = "INSERT INTO premios_redimidos (id_cliente, id_premio, tickets_gastados) "
