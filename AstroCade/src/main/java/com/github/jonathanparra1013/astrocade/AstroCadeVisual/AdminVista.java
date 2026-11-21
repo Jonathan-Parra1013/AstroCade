@@ -8,18 +8,8 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
-import com.github.jonathanparra1013.astrocade.*;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.AstroCadeFacade;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Maquina;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.*;
+import com.github.jonathanparra1013.astrocade.ManejoErrores.*;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -61,20 +51,61 @@ public class AdminVista extends javax.swing.JFrame {
     }
     
     private void cargarTablaCuentas() {
+        agregarMenuEventos();
         
         String[] columnas = {"Nombre", "Correo", "Tipo"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
         if (admin != null) {
-            modelo.addRow(new Object[]{admin.getNombre(), admin.getEmail(), "Administrador", "****"});
+            modelo.addRow(new Object[]{admin.getNombre(), admin.getEmail(), admin.getRol()});
         }
 
         for (GestorClientes.ClienteConTarjeta cc : GestorClientes.getClientes()) {
             Cliente c = cc.getCliente();
-            modelo.addRow(new Object[]{c.getNombre(), c.getEmail(), "Cliente", "N/A"});
+            modelo.addRow(new Object[]{c.getNombre(), c.getEmail(), c.getRol()});
         }
 
         jTable2.setModel(modelo);
+    }
+
+    /** Menú "Evento global": permite al administrador activar Normal, Black Friday o Cumpleaños. */
+    private void agregarMenuEventos() {
+        if (getJMenuBar() != null) {
+            return;
+        }
+        JMenuBar barra = new JMenuBar();
+        JMenu menu = new JMenu("Evento global");
+        try {
+            for (Evento ev : fachada.listarEventos()) {
+                JMenuItem item = new JMenuItem(ev.getNombre());
+                item.addActionListener(e -> cambiarEvento(ev));
+                menu.add(item);
+            }
+            setTitle("AstroCade - Evento activo: " + fachada.obtenerEventoActivo().getNombre());
+        } catch (AstroCadeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        barra.add(menu);
+        setJMenuBar(barra);
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    private void cambiarEvento(Evento evento) {
+        if (admin == null) {
+            JOptionPane.showMessageDialog(this, "Solo un administrador puede cambiar el evento.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            Evento activo = fachada.cambiarEvento(admin, evento.getTipo());
+            setTitle("AstroCade - Evento activo: " + activo.getNombre());
+            JOptionPane.showMessageDialog(this, "Evento activo: " + activo.getNombre()
+                    + "\nLas partidas cuestan ahora el " + Math.round(activo.getFactorPrecio() * 100)
+                    + "% del precio normal.");
+        } catch (AstroCadeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -338,67 +369,86 @@ public class AdminVista extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int seleccion = cmbMaquinas.getSelectedIndex();
         Maquina maquinaElegida = null;
-
         switch (seleccion) {
             case 1: maquinaElegida = carreras; break;
             case 2: maquinaElegida = disparos; break;
             case 3: maquinaElegida = garra; break;
             case 4: maquinaElegida = ruleta; break;
         }
-
-        if (maquinaElegida != null && admin != null) {
-            fachada.ponerMaquinaEnMantenimiento(admin, maquinaElegida);
-            JOptionPane.showMessageDialog(this, "Máquina " + maquinaElegida.getNombre() + " puesta en mantenimiento.");
-        } else {
+        if (maquinaElegida == null || admin == null) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una máquina válida del menú.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            // El botón alterna: si la máquina está activa pasa a mantenimiento y viceversa.
+            if (maquinaElegida.estaDisponible()) {
+                fachada.ponerMaquinaEnMantenimiento(admin, maquinaElegida);
+                JOptionPane.showMessageDialog(this, "Máquina " + maquinaElegida.getNombre() + " puesta en mantenimiento.");
+            } else {
+                fachada.cambiarEstadoMaquina(admin, maquinaElegida, "Activa");
+                JOptionPane.showMessageDialog(this, "Máquina " + maquinaElegida.getNombre() + " activada de nuevo.");
+            }
+        } catch (AstroCadeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        java.util.List<GestorClientes.ClienteConTarjeta> lista = GestorClientes.getClientes();
+        if (admin == null || lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay clientes para recargar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Object elegido = JOptionPane.showInputDialog(this, "Seleccione el cliente a recargar:",
+                "Recargar tarjeta", JOptionPane.QUESTION_MESSAGE, null,
+                lista.toArray(), lista.get(0));
+        if (elegido == null) {
+            return;
+        }
+        Tarjeta destino = ((GestorClientes.ClienteConTarjeta) elegido).getTarjeta();
         String input = JOptionPane.showInputDialog(this, "Ingrese el monto a recargar en la tarjeta:");
-        if (input != null && !input.isEmpty()) {
-            try {
-                int cantidad = Integer.parseInt(input);
-                if (admin != null && tarjeta != null) {
-                    fachada.recargarTarjeta(admin, tarjeta, cantidad);
-                    JOptionPane.showMessageDialog(this, "¡Tarjeta recargada con éxito! Nuevo saldo: $" + tarjeta.getSaldoJugadas());
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        if (input == null || input.isBlank()) {
+            return;
+        }
+        try {
+            int cantidad = Integer.parseInt(input.trim());
+            fachada.recargarTarjeta(admin, destino, cantidad);
+            JOptionPane.showMessageDialog(this, "¡Tarjeta recargada con éxito! Nuevo saldo: $" + destino.getSaldoJugadas());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (AstroCadeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            String idTarjeta = jTextField1.getText();
-            String nombre = jTextField2.getText();
-            String correo = jTextField3.getText();
-            int saldoInicial = Integer.parseInt(jTextField4.getText());
-
+            String idTarjeta = jTextField1.getText().trim();
+            String nombre = jTextField2.getText().trim();
+            String correo = jTextField3.getText().trim();
             if (nombre.isEmpty() || idTarjeta.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-
-            fachada.registrarCliente(
-                    idTarjeta,
-                    nombre,
-                    correo,
-                    saldoInicial,
-                    TarjetaFactory.TipoTarjeta.GOLD);
-
+            int saldoInicial = Integer.parseInt(jTextField4.getText().trim());
+            Object tipo = JOptionPane.showInputDialog(this, "Seleccione el tipo de tarjeta:",
+                    "Tipo de tarjeta", JOptionPane.QUESTION_MESSAGE, null,
+                    TarjetaFactory.TipoTarjeta.values(), TarjetaFactory.TipoTarjeta.BASICA);
+            if (tipo == null) {
+                return;
+            }
+            fachada.registrarCliente(idTarjeta, nombre, correo, saldoInicial,
+                    (TarjetaFactory.TipoTarjeta) tipo);
             JOptionPane.showMessageDialog(this, "¡Cliente registrado con éxito!");
-            
             jTextField1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField4.setText("");
-
             cargarTablaCuentas();
-
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El saldo debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (AstroCadeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
