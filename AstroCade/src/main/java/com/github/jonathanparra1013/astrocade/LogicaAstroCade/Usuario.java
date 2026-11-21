@@ -1,30 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.github.jonathanparra1013.astrocade;
-import java.util.Date;
-import java.util.List;
-/**
- *
- * @author jonap
- */
+package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
 
-public class Usuario {
-    protected String id;
-    protected String nombre;
-    protected String email;
+public abstract class Usuario {
 
-    public Usuario(String id, String nombre, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
+    private final String id;
+    private final String nombre;
+    private final String email;
+
+    protected Usuario(String id, String nombre, String email) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("El id del usuario es obligatorio.");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre del usuario es obligatorio.");
+        }
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("El correo del usuario no es válido.");
+        }
+        this.id = id.trim();
+        this.nombre = nombre.trim();
+        this.email = email.trim();
     }
+
+
+    public abstract String getRol();
 
     public boolean login() {
         System.out.println(nombre + " ha iniciado sesion.");
         return true;
     }
-}
 
+    public String getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}

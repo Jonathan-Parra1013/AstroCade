@@ -1,11 +1,11 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
 import com.github.jonathanparra1013.astrocade.Basica;
-import com.github.jonathanparra1013.astrocade.Cliente;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
 import com.github.jonathanparra1013.astrocade.Diamond;
 import com.github.jonathanparra1013.astrocade.GestorClientes;
 import com.github.jonathanparra1013.astrocade.Gold;
-import com.github.jonathanparra1013.astrocade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/** Acceso a datos de los clientes y sus tarjetas (tablas usuarios, tarjetas y premios_redimidos). */
+// Acceso a datos de los clientes y sus tarjetas (tablas usuarios, tarjetas y premios_redimidos). */
 public class ClienteDAO {
 
-    /** Carga todos los clientes con su tarjeta y los premios que ya redimieron. */
+    // Carga todos los clientes con su tarjeta y los premios que ya redimieron. */
     public List<GestorClientes.ClienteConTarjeta> listar() throws PersistenciaException {
         String sqlClientes = "SELECT u.id, u.nombre, u.email, u.fecha_nacimiento, "
                 + "t.id_tarjeta, t.tipo, t.saldo_jugadas, t.saldo_tickets "

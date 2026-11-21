@@ -6,7 +6,7 @@ import com.github.jonathanparra1013.astrocade.MaquinaDisparos;
 import com.github.jonathanparra1013.astrocade.MaquinaGarra;
 import com.github.jonathanparra1013.astrocade.MaquinaRuleta;
 import com.github.jonathanparra1013.astrocade.PremioPorMaquina;
-import com.github.jonathanparra1013.astrocade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,13 +84,7 @@ public class MaquinaDAO {
         }
     }
 
-    /**
-     * Guarda el resultado de una partida en una sola transacción: el saldo y los tickets de la tarjeta,
-     * el stock de premios de la máquina y una fila en el historial de partidas.
-     *
-     * @param saldoAntes   saldo de jugadas de la tarjeta antes de jugar
-     * @param ticketsAntes tickets de la tarjeta antes de jugar
-     */
+    
     public void guardarPartida(Maquina maquina, Tarjeta tarjeta, int saldoAntes, int ticketsAntes)
             throws PersistenciaException {
         String sqlPartida = "INSERT INTO partidas (id_tarjeta, id_maquina, costo_cobrado, tickets_ganados) "

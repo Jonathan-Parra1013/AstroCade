@@ -1,78 +1,83 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.github.jonathanparra1013.astrocade;
+package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
 
-/**
- *
- * @author jonap
- */
+
 public abstract class Tarjeta {
-    protected String idTarjeta;
-    protected int saldoJugadas;
-    protected int saldoTickets;
-    protected int limiteSaldo;
+
+    private final String idTarjeta;
+    private int saldoJugadas;
+    private int saldoTickets;
+    private final int limiteSaldo;
     private final EstrategiaDescuento estrategiaDescuento;
 
-    public Tarjeta(String idTarjeta, int limiteSaldo) {
-        this(idTarjeta, limiteSaldo, new DescuentoBasico());
-    }
-
-    public Tarjeta(String idTarjeta, int limiteSaldo,
-                   EstrategiaDescuento estrategiaDescuento) {
-        this.idTarjeta = idTarjeta;
-        this.limiteSaldo = limiteSaldo;
-        this.saldoJugadas = 0;
-        this.saldoTickets = 0;
+    protected Tarjeta(String idTarjeta, int limiteSaldo, EstrategiaDescuento estrategiaDescuento) {
+        if (idTarjeta == null || idTarjeta.isBlank()) {
+            throw new IllegalArgumentException("El id de la tarjeta es obligatorio.");
+        }
+        if (limiteSaldo <= 0) {
+            throw new IllegalArgumentException("El límite de saldo debe ser positivo.");
+        }
         if (estrategiaDescuento == null) {
             throw new IllegalArgumentException("La estrategia de descuento es obligatoria.");
         }
+        this.idTarjeta = idTarjeta.trim();
+        this.limiteSaldo = limiteSaldo;
         this.estrategiaDescuento = estrategiaDescuento;
     }
+
+    // Nombre legible del tipo de tarjeta (cada subclase lo sobrescribe). */
+    public abstract String getTipo();
 
     public double calcularDescuento(double costoBase) {
         return estrategiaDescuento.calcular(costoBase);
     }
 
-    public void recargarSaldo(int cantidad) {
-        if ((this.saldoJugadas + cantidad) <= limiteSaldo) {
-            this.saldoJugadas += cantidad;
-        } else {
-            System.out.println("Error: Supera el límite de saldo de este tipo de tarjeta.");
-        }
+    public boolean puedeRecargar(int cantidad) {
+        return cantidad > 0 && (saldoJugadas + cantidad) <= limiteSaldo;
     }
 
-    // Renombrado para que coincida con las máquinas
+    public void recargarSaldo(int cantidad) {
+        if (cantidad < 0) {
+            throw new IllegalArgumentException("La recarga no puede ser negativa.");
+        }
+        if (saldoJugadas + cantidad > limiteSaldo) {
+            throw new IllegalArgumentException("Supera el límite de saldo de este tipo de tarjeta.");
+        }
+        this.saldoJugadas += cantidad;
+    }
+
     public boolean descontarSaldo(double costo) {
-        if (saldoJugadas >= costo) {
-            saldoJugadas -= costo;
+        if (costo >= 0 && saldoJugadas >= costo) {
+            saldoJugadas -= (int) Math.ceil(costo);
             return true;
         }
         return false;
     }
 
-    // Renombrado para coincidir con las máquinas
     public void agregarTickets(int tickets) {
+        if (tickets < 0) {
+            throw new IllegalArgumentException("Los tickets a agregar no pueden ser negativos.");
+        }
         this.saldoTickets += tickets;
     }
 
-    // Nuevo método necesario para reclamar premios
     public void descontarTickets(int cantidad) {
-        if (this.saldoTickets >= cantidad) {
-            this.saldoTickets -= cantidad;
+        if (cantidad < 0 || saldoTickets < cantidad) {
+            throw new IllegalArgumentException("Tickets insuficientes.");
         }
+        this.saldoTickets -= cantidad;
     }
 
-    // Getters adaptados a lo que piden las demás clases
     public int getSaldoJugadas() { return saldoJugadas; }
     public int getSaldoTickets() { return saldoTickets; }
-    public int getSaldo() { return saldoJugadas; } // Usado en las máquinas
-    public int getTickets() { return saldoTickets; } // Usado en las máquinas
-    public String getNumeroTarjeta() { return idTarjeta; } // Usado en PremioPorTickets
+    public int getSaldo() { return saldoJugadas; }
+    public int getTickets() { return saldoTickets; }
+    public int getLimiteSaldo() { return limiteSaldo; }
+    public String getNumeroTarjeta() { return idTarjeta; }
 
     public void setSaldoTickets(int nuevoSaldoTickets) {
+        if (nuevoSaldoTickets < 0) {
+            throw new IllegalArgumentException("El saldo de tickets no puede ser negativo.");
+        }
         this.saldoTickets = nuevoSaldoTickets;
     }
 }
-
