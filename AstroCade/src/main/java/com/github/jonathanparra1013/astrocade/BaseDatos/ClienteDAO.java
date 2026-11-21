@@ -1,11 +1,10 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Basica;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Diamond;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Gold;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.Repositorios.ClienteRepositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,9 +17,10 @@ import java.util.Locale;
 import java.util.Map;
 
 // Acceso a datos de los clientes y sus tarjetas (tablas usuarios, tarjetas y premios_redimidos). */
-public class ClienteDAO {
+public class ClienteDAO implements ClienteRepositorio {
 
     // Carga todos los clientes con su tarjeta y los premios que ya redimieron. */
+    @Override
     public List<GestorClientes.ClienteConTarjeta> listar() throws PersistenciaException {
         String sqlClientes = "SELECT u.id, u.nombre, u.email, u.fecha_nacimiento, "
                 + "t.id_tarjeta, t.tipo, t.saldo_jugadas, t.saldo_tickets "
@@ -62,6 +62,7 @@ public class ClienteDAO {
     }
 
     //Guarda un cliente nuevo junto con su tarjeta (las dos inserciones van en una sola transacción)
+    @Override
     public void insertar(Cliente cliente, Tarjeta tarjeta) throws PersistenciaException {
         String sqlUsuario = "INSERT INTO usuarios (id, nombre, email, rol, fecha_nacimiento) "
                 + "VALUES (?, ?, ?, 'CLIENTE', ?)";
@@ -101,6 +102,7 @@ public class ClienteDAO {
     }
 
     // Guarda en la base el saldo de jugadas y los tickets actuales de la tarjeta
+    @Override
     public void actualizarTarjeta(Tarjeta tarjeta) throws PersistenciaException {
         try {
             actualizarTarjeta(Conexion.getConexion(), tarjeta);
@@ -126,17 +128,12 @@ public class ClienteDAO {
         return tarjeta.getClass().getSimpleName().toUpperCase(Locale.ROOT);
     }
 
-    // Crea el objeto del tipo de tarjeta que corresponde al texto guardado en la base
+    // Crea el objeto del tipo de tarjeta que corresponde al texto guardado en la base (patrón Factory)
     private static Tarjeta crearTarjeta(String tipo, String idTarjeta) throws SQLException {
-        switch (tipo) {
-            case "BASICA":
-                return new Basica(idTarjeta);
-            case "GOLD":
-                return new Gold(idTarjeta);
-            case "DIAMOND":
-                return new Diamond(idTarjeta);
-            default:
-                throw new SQLException("Tipo de tarjeta desconocido: " + tipo);
+        try {
+            return TarjetaFactory.crear(TarjetaFactory.TipoTarjeta.valueOf(tipo), idTarjeta);
+        } catch (IllegalArgumentException e) {
+            throw new SQLException("Tipo de tarjeta desconocido: " + tipo, e);
         }
     }
 }

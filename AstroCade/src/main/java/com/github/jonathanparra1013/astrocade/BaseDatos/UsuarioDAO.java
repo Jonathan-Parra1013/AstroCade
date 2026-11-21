@@ -1,14 +1,16 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
+import com.github.jonathanparra1013.astrocade.Repositorios.UsuarioRepositorio;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // Acceso a datos de los usuarios que no son clientes (administradores). 
-public class UsuarioDAO {
+public class UsuarioDAO implements UsuarioRepositorio {
 
    
+    @Override
     public Administrador autenticarAdministrador(String password) throws PersistenciaException {
         String sql = "SELECT id, nombre, email FROM usuarios "
                 + "WHERE rol = 'ADMINISTRADOR' AND password_hash = SHA2(?, 256) LIMIT 1";

@@ -12,7 +12,7 @@ import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.AstroCadeFacade;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Maquina;
-import com.github.jonathanparra1013.astrocade.Excepciones.AstroCadeException;
+import com.github.jonathanparra1013.astrocade.ManejoErrores.*;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
@@ -40,7 +40,7 @@ public class IngresarVista extends javax.swing.JFrame {
         setLocationRelativeTo(null); 
     }
 
-    // Carga desde la base de datos los clientes, las tarjetas y las máquinas (con sus premios). */
+    /** Carga desde la base de datos los clientes, las tarjetas y las máquinas (con sus premios). */
     private void inicializarDatosLogica() {
         try {
             java.util.List<GestorClientes.ClienteConTarjeta> lista = fachada.cargarClientes();

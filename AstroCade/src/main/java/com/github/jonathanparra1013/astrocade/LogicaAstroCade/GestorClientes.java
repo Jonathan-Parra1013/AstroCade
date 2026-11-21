@@ -12,13 +12,10 @@ public class GestorClientes {
     private static List<ClienteConTarjeta> listaGlobal = new ArrayList<>();
 
 
-    static {
-        Cliente c1 = new Cliente("CLI-01", "Juanito Perez", "juanito@email.com", new Date());
-        Tarjeta t1 = TarjetaFactory.crear(
-                TarjetaFactory.TipoTarjeta.DIAMOND,
-                "TARJ-001");
-        t1.recargarSaldo(100000);
-        listaGlobal.add(new ClienteConTarjeta(c1, t1));
+    /** Reemplaza la lista en memoria por los clientes leídos de la base de datos. */
+    public static void cargar(List<ClienteConTarjeta> clientesDeLaBase) {
+        listaGlobal.clear();
+        listaGlobal.addAll(clientesDeLaBase);
     }
 
     public static void agregarCliente(Cliente cliente, Tarjeta tarjeta) {

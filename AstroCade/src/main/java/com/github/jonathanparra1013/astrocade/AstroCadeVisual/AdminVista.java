@@ -68,7 +68,7 @@ public class AdminVista extends javax.swing.JFrame {
         jTable2.setModel(modelo);
     }
 
-    /** Menú "Evento global": permite al administrador activar Normal, Black Friday o Cumpleaños. */
+
     private void agregarMenuEventos() {
         if (getJMenuBar() != null) {
             return;

@@ -1,6 +1,6 @@
 package com.github.jonathanparra1013.astrocade.ManejoErrores;
 
-// Se lanza cuando el usuario escribe un dato que no cumple las reglas (vacío, negativo, formato) :D
+// Se lanza cuando el usuario escribe un dato que no cumple las reglas (vacío, negativo, formato
 public class DatoInvalidoException extends AstroCadeException {
 
     public DatoInvalidoException(String mensaje) {
