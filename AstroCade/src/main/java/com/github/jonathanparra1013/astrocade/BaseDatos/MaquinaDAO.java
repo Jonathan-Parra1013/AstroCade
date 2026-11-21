@@ -1,11 +1,11 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Maquina;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaFactory;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaFactory;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaGarra;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaRuleta;
+import com.github.jonathanparra1013.astrocade.Premios.PremioPorMaquina;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
 import com.github.jonathanparra1013.astrocade.Repositorios.MaquinaRepositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,6 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Tarjetas;
+
+import com.github.jonathanparra1013.astrocade.Tarjetas.EstrategiaDescuento;
 
 public class DescuentoGold implements EstrategiaDescuento {
     @Override

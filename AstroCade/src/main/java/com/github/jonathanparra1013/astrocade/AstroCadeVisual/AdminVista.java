@@ -8,6 +8,16 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaRuleta;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaGarra;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaDisparos;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaCarreras;
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
+import com.github.jonathanparra1013.astrocade.Tarjetas.TarjetaFactory;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
+import com.github.jonathanparra1013.astrocade.Usuarios.GestorClientes;
+import com.github.jonathanparra1013.astrocade.Usuarios.Administrador;
+import com.github.jonathanparra1013.astrocade.Usuarios.Cliente;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.*;
 import com.github.jonathanparra1013.astrocade.ManejoErrores.*;
 import javax.swing.*;

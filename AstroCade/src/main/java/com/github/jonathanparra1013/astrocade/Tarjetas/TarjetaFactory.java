@@ -1,4 +1,9 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Tarjetas;
+
+import com.github.jonathanparra1013.astrocade.Tarjetas.Diamond;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Gold;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Basica;
+import com.github.jonathanparra1013.astrocade.Tarjetas.Tarjeta;
 
 public class TarjetaFactory {
     public enum TipoTarjeta {

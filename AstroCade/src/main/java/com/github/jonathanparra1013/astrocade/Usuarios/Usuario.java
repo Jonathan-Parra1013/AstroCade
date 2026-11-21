@@ -1,4 +1,4 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Usuarios;
 
 
 public abstract class Usuario {

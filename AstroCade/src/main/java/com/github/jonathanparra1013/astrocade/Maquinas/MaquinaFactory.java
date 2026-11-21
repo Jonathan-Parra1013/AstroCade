@@ -1,4 +1,9 @@
-package com.github.jonathanparra1013.astrocade.LogicaAstroCade;
+package com.github.jonathanparra1013.astrocade.Maquinas;
+
+import com.github.jonathanparra1013.astrocade.Premios.PremioPorMaquina;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaDisparos;
+import com.github.jonathanparra1013.astrocade.Maquinas.MaquinaCarreras;
+import com.github.jonathanparra1013.astrocade.Maquinas.Maquina;
 
 public class MaquinaFactory {
     public enum TipoMaquina {
