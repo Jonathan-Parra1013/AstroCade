@@ -9,7 +9,7 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  * @author jonap
  */
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.*;
-import com.github.jonathanparra1013.astrocade.Excepciones.*;
+import com.github.jonathanparra1013.astrocade.ManejoErrores.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
