@@ -3,7 +3,7 @@ package com.github.jonathanparra1013.astrocade.BaseDatos;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Basica;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Diamond;
-import com.github.jonathanparra1013.astrocade.GestorClientes;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Gold;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import java.sql.Connection;

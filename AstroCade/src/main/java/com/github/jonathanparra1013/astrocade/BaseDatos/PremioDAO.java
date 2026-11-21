@@ -1,7 +1,7 @@
 package com.github.jonathanparra1013.astrocade.BaseDatos;
 
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.PremioPorTickets;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorTickets;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
