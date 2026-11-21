@@ -8,15 +8,8 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
-import com.github.jonathanparra1013.astrocade.*;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.AstroCadeFacade;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaFactory;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.*;
+import com.github.jonathanparra1013.astrocade.Excepciones.*;
 import javax.swing.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -207,7 +200,7 @@ public class MaquinaVista extends javax.swing.JFrame {
                     break;
             }
         } catch (Exception e) {
-            System.out.println("Error al ejecutar el juego: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         System.out.flush();

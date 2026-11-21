@@ -8,19 +8,14 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
-import com.github.jonathanparra1013.astrocade.*;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.AstroCadeFacade;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.*;
+import com.github.jonathanparra1013.astrocade.Excepciones.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 public class TiendaVista extends javax.swing.JFrame {
     
     private final AstroCadeFacade fachada = new AstroCadeFacade();
+    private java.util.List<PremioPorTickets> catalogo = new java.util.ArrayList<>();
    private Cliente cliente;
     private Tarjeta tarjeta;
     private MaquinaRuleta ruleta;
@@ -65,17 +60,20 @@ public class TiendaVista extends javax.swing.JFrame {
         }
 
 
-        DefaultTableModel modeloPremios = new DefaultTableModel(new String[]{"Premio", "Valor Tickets"}, 0);
-        modeloPremios.addRow(new Object[]{"Oso de Peluche", 10});
-        modeloPremios.addRow(new Object[]{"Consola Mini", 50});
-        modeloPremios.addRow(new Object[]{"Bebida Energética", 5});
-        jTable3.setModel(modeloPremios);
-
+        try {
+            catalogo = fachada.listarPremiosTienda();   // premios y stock reales desde la base de datos
+        } catch (AstroCadeException ex) {
+            catalogo = new java.util.ArrayList<>();
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        DefaultTableModel modeloPremios = new DefaultTableModel(new String[]{"Premio", "Valor Tickets", "Stock"}, 0);
         jComboBox1.removeAllItems();
         jComboBox1.addItem("Seleccione");
-        jComboBox1.addItem("Oso de Peluche (10 Tickets)");
-        jComboBox1.addItem("Consola Mini (50 Tickets)");
-        jComboBox1.addItem("Bebida Energética (5 Tickets)");
+        for (PremioPorTickets p : catalogo) {
+            modeloPremios.addRow(new Object[]{p.getNombre(), p.getCostoTickets(), p.getStock()});
+            jComboBox1.addItem(p.getNombre() + " (" + p.getCostoTickets() + " Tickets)");
+        }
+        jTable3.setModel(modeloPremios);
     }
 
     /**
@@ -259,29 +257,22 @@ public class TiendaVista extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int seleccion = jComboBox1.getSelectedIndex();
-        if (seleccion <= 0) {
+        if (seleccion <= 0 || seleccion > catalogo.size()) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione un premio válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        int costoTickets = 0;
-        String nombrePremio = "";
-
-        switch (seleccion) {
-            case 1: costoTickets = 10; nombrePremio = "Oso de Peluche"; break;
-            case 2: costoTickets = 50; nombrePremio = "Consola Mini"; break;
-            case 3: costoTickets = 5; nombrePremio = "Bebida Energética"; break;
+        if (tarjeta == null || cliente == null) {
+            JOptionPane.showMessageDialog(this, "No hay un cliente activo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-
-        if (tarjeta != null) {
-            if (fachada.redimirPremio(cliente, tarjeta, nombrePremio, costoTickets)) {
-                JOptionPane.showMessageDialog(this, "¡Felicidades! Has redimido exitosamente: " + nombrePremio);
-                cargarDatosTienda();
-            } else {
-                JOptionPane.showMessageDialog(this, "No tienes suficientes tickets para redimir este premio.", "Saldo Insuficiente", JOptionPane.ERROR_MESSAGE);
-            }
+        PremioPorTickets elegido = catalogo.get(seleccion - 1);
+        try {
+            fachada.redimirPremio(cliente, tarjeta, elegido.getNombre());
+            JOptionPane.showMessageDialog(this, "¡Felicidades! Has redimido exitosamente: " + elegido.getNombre());
+        } catch (AstroCadeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "No se pudo redimir", JOptionPane.ERROR_MESSAGE);
         }
-        
+        cargarDatosTienda();
     }//GEN-LAST:event_jButton2ActionPerformed
     
                                             

@@ -8,23 +8,24 @@ package com.github.jonathanparra1013.astrocade.AstroCadeVisual;
  *
  * @author jonap
  */
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Administrador;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.AstroCadeFacade;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.GestorClientes;
+import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Maquina;
+import com.github.jonathanparra1013.astrocade.Excepciones.AstroCadeException;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Cliente;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.Tarjeta;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.TarjetaFactory;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaFactory;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaRuleta;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaCarreras;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaDisparos;
 import com.github.jonathanparra1013.astrocade.LogicaAstroCade.MaquinaGarra;
-import com.github.jonathanparra1013.astrocade.LogicaAstroCade.PremioPorMaquina;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 public class IngresarVista extends javax.swing.JFrame {
     
+    private final AstroCadeFacade fachada = new AstroCadeFacade();
     private Administrador admin;
     private Cliente cliente;
     private Tarjeta tarjeta;
@@ -39,42 +40,31 @@ public class IngresarVista extends javax.swing.JFrame {
         setLocationRelativeTo(null); 
     }
 
+    // Carga desde la base de datos los clientes, las tarjetas y las máquinas (con sus premios). */
     private void inicializarDatosLogica() {
-        // Datos de prueba iniciales
-        admin = new Administrador("ADM-01", "Administrador Principal", "admin@astrocade.com", "1234");
-        cliente  = new Cliente("CLI-01", "Juanito Perez", "juanito@email.com", new Date());
-        tarjeta = TarjetaFactory.crear(
-                TarjetaFactory.TipoTarjeta.DIAMOND,
-                "TARJ-001");
-        tarjeta.recargarSaldo(100000); 
-       
-
-        // Máquinas y premios
-        PremioPorMaquina[] premiosGarra = { new PremioPorMaquina("Oso de Peluche", 5) };
-        PremioPorMaquina[] premiosRuleta = { new PremioPorMaquina("Consola Mini", 2) };
-
-        ruleta = (MaquinaRuleta) MaquinaFactory.crear(
-                MaquinaFactory.TipoMaquina.RULETA,
-                "Ruleta de la Fortuna",
-                5000,
-                premiosRuleta);
-        carreras = (MaquinaCarreras) MaquinaFactory.crear(
-                MaquinaFactory.TipoMaquina.CARRERAS,
-                "Speed Racer",
-                3000,
-                null);
-        disparos = (MaquinaDisparos) MaquinaFactory.crear(
-                MaquinaFactory.TipoMaquina.DISPAROS,
-                "Target Shooter",
-                4000,
-                null);
-        garra = (MaquinaGarra) MaquinaFactory.crear(
-                MaquinaFactory.TipoMaquina.GARRA,
-                "Garra Mágica",
-                2500,
-                premiosGarra);
+        try {
+            java.util.List<GestorClientes.ClienteConTarjeta> lista = fachada.cargarClientes();
+            if (!lista.isEmpty()) {
+                cliente = lista.get(0).getCliente();
+                tarjeta = lista.get(0).getTarjeta();
+            }
+            for (Maquina m : fachada.cargarMaquinas()) {
+                if (m instanceof MaquinaRuleta) {
+                    ruleta = (MaquinaRuleta) m;
+                } else if (m instanceof MaquinaCarreras) {
+                    carreras = (MaquinaCarreras) m;
+                } else if (m instanceof MaquinaDisparos) {
+                    disparos = (MaquinaDisparos) m;
+                } else if (m instanceof MaquinaGarra) {
+                    garra = (MaquinaGarra) m;
+                }
+            }
+        } catch (AstroCadeException e) {
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage() + "\n\nVerifique que MySQL esté encendido y que la base astrocade_db exista.",
+                    "Error de base de datos", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,7 +158,17 @@ public class IngresarVista extends javax.swing.JFrame {
 
         if ("Administrador".equals(rol)) {
             String pass = JOptionPane.showInputDialog(this, "Ingrese la contraseña de Administrador:", "Autenticación", JOptionPane.QUESTION_MESSAGE);
-            if (pass != null && admin.validarPassword(pass)) {
+            Administrador autenticado = null;
+            if (pass != null) {
+                try {
+                    autenticado = fachada.autenticarAdministrador(pass);
+                } catch (AstroCadeException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            if (autenticado != null) {
+                admin = autenticado;
                 JOptionPane.showMessageDialog(this, "¡Acceso Concedido!");
                 new AdminVista(admin, cliente, tarjeta, ruleta, carreras, disparos, garra).setVisible(true);
                 this.dispose();
